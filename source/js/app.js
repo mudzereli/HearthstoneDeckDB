@@ -99,7 +99,7 @@ angular.module('AngularApp', [
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
-          ShowFilters: JSON.parse(localStorageService.get('ShowFilters')),
+          ShowFilters: true,
           FilterClasses: [],
           FilterArchetypes: [],
           FilterEvents: [],
@@ -390,7 +390,6 @@ angular.module('AngularApp', [
     $scope.ToggleFilters = function()
       {
         $scope.Application.ShowFilters = !$scope.Application.ShowFilters;
-        localStorageService.set('ShowFilters',$scope.Application.ShowFilters);
       };
     $scope.SelectDeck = function(index)
       {

@@ -17,6 +17,5 @@
               a(href='#/helper') Deck Stats
             li(ng-class="{active:Application.ShowFilters}", ng-click="ToggleFilters()")
               a(style="cursor: pointer;") 
-                span(ng-if="Application.ShowFilters") Hide 
-                span(ng-if="!Application.ShowFilters") Show 
-                | Filters
+                span.text-danger(ng-if="Application.ShowFilters") Hide Filters
+                span.text-success(ng-if="!Application.ShowFilters") Show Filters

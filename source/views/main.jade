@@ -12,6 +12,8 @@
             div(google-chart, chart="ChartByArchetype", style="height:200px; width: 100%;")
         .row
           .col-sm-6
+            div(google-chart, chart="ChartByEvent", style="height:200px; width: 100%;")
+          .col-sm-6
             .table-responsive
               .panel.panel-info
                 .panel-heading
@@ -38,8 +40,6 @@
                       td
                         strong Most Played Event
                       td(class="fg-{{ ChartByEvent.data.rows[0].c[0].v.toUpperCase() }}") {{ ChartByEvent.data.rows[0].c[0].v }}
-          .col-sm-6
-            div(google-chart, chart="ChartByEvent", style="height:200px; width: 100%;")
   .col-sm-4
     .panel.panel-default
       .panel-heading.unselectable(class="bg-{{ Application.CurrentlySelectedDeck.CLASS }}")
