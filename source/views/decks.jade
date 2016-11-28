@@ -1,0 +1,35 @@
+.row
+  .col-sm-12
+    .panel.panel-default
+      .panel-heading
+        | Filtered Deck Lists
+      .panel-body
+        .table-responsive
+          table.table.table-striped.table-condensed
+            thead
+              th Date
+              th Class
+              th Archetype
+              th Player
+              th Event
+              th Card List
+            tbody
+              tr(ng-repeat="deck in FILTERDECKDB | limitTo: 150 track by $index", class="bg-{{ deck.CLASS }}")
+                td {{ deck.DATE | date:"MM/dd/yyyy" }}
+                td {{ deck.CLASS | titleCase }}
+                td {{ deck.ARCHETYPE | titleCase }}
+                td {{ deck.PLAYER | titleCase }}
+                td {{ deck.EVENT | titleCase }}
+                td
+                  span.glyphicon.glyphicon-th-list.pull-right(tooltip="Deck List", style=,"cursor: pointer", ng-click="Application.DeckListShowing[$index] = !Application.DeckListShowing[$index];")
+                  div(ng-show="Application.DeckListShowing[$index]")
+                    br
+                    table.table.table-striped.table-condensed(class="fg-{{ deck.CLASS }}", style="font-size: 0.7em;")
+                      thead
+                        th #
+                        th Card
+                      tbody
+                        tr(ng-repeat="card in deck.CARDLIST")
+                          td(style="padding: 1px; margin: 1px;")
+                            strong {{ card[0] }}
+                          td(style="padding: 1px; margin: 1px;") {{ card[1] }}

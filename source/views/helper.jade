@@ -1,0 +1,65 @@
+.row
+    .col-sm-3
+        .panel.panel-success
+            .panel-heading
+                | Auto-Include Cards
+            table.table.table-striped.table-condensed(style="font-size: 0.8em;")
+                thead
+                  th Avg#
+                  th Card
+                  th Seen%
+                tbody
+                  tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 >= 90")
+                    td 
+                      strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
+                    td
+                      strong {{ card }}
+                    td {{ DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%
+    .col-sm-3
+        .panel.panel-info
+            .panel-heading
+                | Good Cards
+            table.table.table-striped.table-condensed(style="font-size: 0.8em;")
+                thead
+                  th Avg#
+                  th Card
+                  th Seen%
+                tbody
+                  tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 < 90 && DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 >= 65")
+                    td 
+                      strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
+                    td
+                      strong {{ card }}
+                    td {{ DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%
+    .col-sm-3
+        .panel.panel-warning
+            .panel-heading
+                | Tech Cards
+            table.table.table-striped.table-condensed(style="font-size: 0.8em;")
+                thead
+                  th Avg#
+                  th Card
+                  th Seen%
+                tbody
+                  tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 < 65 && DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 >= 35")
+                    td 
+                      strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
+                    td
+                      strong {{ card }}
+                    td {{ DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%
+    .col-sm-3
+        .panel.panel-danger
+            .panel-heading
+                | Other Cards
+            table.table.table-striped.table-condensed(style="font-size: 0.8em;")
+                thead
+                  th Avg#
+                  th Card
+                  th Seen%
+                tbody
+                  tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 < 35")
+                    td 
+                      strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
+                    td
+                      strong {{ card }}
+                    td {{ DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%

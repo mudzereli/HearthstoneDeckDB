@@ -1,0 +1,102 @@
+/* LESS variables */
+@footer-height: 45;
+@navbar-brand-width: 33; /* percentage */
+@background-url: 'http://www.wallpaperup.com/uploads/wallpapers/2014/04/07/324863/aaa2e8698fb921bdd3f957f19bba408b.jpg';
+
+/* main styling */
+html {
+    footer {
+        background-color: white;
+    }
+}
+
+/* centered background image */
+body { 
+  background: url(@background-url) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* sticky footer */
+* {
+    margin: 0;
+}
+html {
+    height: 100%;
+    body {
+        height: 100%;
+    }
+    .wrapper {
+        min-height: 100%;
+        margin: 0 auto @footer-height * -1px;
+    }
+    footer, .push {
+        height: @footer-height + 0px;
+    }
+    footer {
+        padding-top: 5px;
+    }
+}
+
+/* justified navbar */
+@media (min-width: 768px){
+    .navbar-header {
+        width: @navbar-brand-width + 0% !important;
+    }
+    .navbar-nav {
+        margin: 0 auto !important;
+        display: table !important;
+        table-layout: auto !important;
+        float: none !important;
+        width: 100% - @navbar-brand-width !important;
+    }
+    .navbar-nav>li {
+        display: table-cell !important;
+        float: none !important;
+        text-align: center !important;
+    }
+}
+
+.table-headerless > tbody > tr:first-child > td {
+    border: none;
+}
+
+.fg-MAGE    { color: #697194 !important; }
+.fg-PRIEST  { color: #A9B4B4 !important; }
+.fg-WARLOCK { color: #4D3850 !important; }
+.fg-SHAMAN  { color: #33365C !important; }
+.fg-WARRIOR { color: #702124 !important; }
+.fg-DRUID   { color: #5D3B2B !important; }
+.fg-ROGUE   { color: #3F3737 !important; }
+.fg-HUNTER  { color: #325F27 !important; }
+.fg-PALADIN { color: #AC7938 !important; }
+
+.bg-MAGE    { color: white !important; background-color: #697194 !important; }
+.bg-PRIEST  { color: white !important; background-color: #A9B4B4 !important; }
+.bg-WARLOCK { color: white !important; background-color: #4D3850 !important; }
+.bg-SHAMAN  { color: white !important; background-color: #33365C !important; }
+.bg-WARRIOR { color: white !important; background-color: #702124 !important; }
+.bg-DRUID   { color: white !important; background-color: #5D3B2B !important; }
+.bg-ROGUE   { color: white !important; background-color: #3F3737 !important; }
+.bg-HUNTER  { color: white !important; background-color: #325F27 !important; }
+.bg-PALADIN { color: white !important; background-color: #AC7938 !important; }
+
+*.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.popover-content
+{
+  color: black;
+}
