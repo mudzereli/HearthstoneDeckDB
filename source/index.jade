@@ -55,7 +55,7 @@ head
                       button.btn.btn-warning(ng-click="Application.ShowFilters = false;")
                         | Hide Filters
                       &nbsp;
-                      button.btn.btn-danger(ng-click="PopulateDeckArchetypes();")
+                      button.btn.btn-danger(ng-click="ResetFilters();")
                         | Reset Filters
                       &nbsp;
                       button.btn.btn-success(ng-click="Calculate();")
@@ -78,15 +78,15 @@ head
                   form.col-sm-2
                     .form-group
                       label Class Filter
-                      div(isteven-multi-select, input-model="Classes", output-model="Application.FilterClasses", button-label="icon", item-label="icon name", tick-property="ticked")
+                      div(isteven-multi-select, input-model="Classes", output-model="FilterClasses", button-label="icon", item-label="icon name", tick-property="ticked")
                   form.col-sm-4
                     .form-group
                       label Archetype Filter
-                      div(isteven-multi-select, input-model="Archetypes", output-model="Application.FilterArchetypes", button-label="name", item-label="icon name filtercount", tick-property="ticked")
+                      div(isteven-multi-select, input-model="Archetypes", output-model="FilterArchetypes", button-label="name", item-label="icon name filtercount", tick-property="ticked")
                   form.col-sm-4
                     .form-group
                       label Event Filter
-                      div(isteven-multi-select, input-model="Events", output-model="Application.FilterEvents", button-label="name", item-label="name filtercount", tick-property="ticked")
+                      div(isteven-multi-select, input-model="Events", output-model="FilterEvents", button-label="name", item-label="name filtercount", tick-property="ticked")
         div(ng-view='')
       .push
     // Footer
