@@ -50,32 +50,19 @@ head
                 | Deck Filters
               .panel-body
                 .row
-                  form.col-sm-3
-                    .form-group
-                      label Class Filter
-                      select.form-control(multiple, ng-model="$parent.Application.FilterClasses")
-                        option(class="fg-SHAMAN", value="shaman") Shaman
-                        option(class="fg-MAGE", value="mage") Mage
-                        option(class="fg-DRUID", value="druid") Druid
-                        option(class="fg-WARRIOR", value="warrior") Warrior
-                        option(class="fg-WARLOCK", value="warlock") Warlock
-                        option(class="fg-HUNTER", value="hunter") Hunter
-                        option(class="fg-ROGUE", value="rogue") Rogue
-                        option(class="fg-PRIEST", value="priest") Priest
-                        option(class="fg-PALADIN", value="paladin") Paladin
-                  form.col-sm-3
-                    .form-group
-                      label Archetype Filter
-                      //div(isteven-multi-select, input-model="modernBrowsers", output-model="Application.FilterArchetypes", button-label="name", item-label="name maker", tick-property="ticked")
-                      select.form-control(multiple, ng-model="$parent.Application.FilterArchetypes")
-                        option(class="fg-{{ ArchetypeData[archetype].CLASS }}", ng-repeat="archetype in DECKARCHETYPES", value="{{ archetype }}") {{ archetype | titleCase }} ({{ ArchetypeData[archetype].FILTERCOUNT }})
-                  
-                  form.col-sm-3
-                    .form-group
-                      label Event Filter
-                      select.form-control(multiple, ng-model="$parent.Application.FilterEvents")
-                        option(ng-repeat="event in EVENTS", value="{{ event }}") {{ event | titleCase }} ({{ EventData[event].FILTERCOUNT }})
-                  .col-sm-3
+                  .col-sm-12
+                    .pull-right
+                      button.btn.btn-warning(ng-click="Application.ShowFilters = false;")
+                        | Hide Filters
+                      &nbsp;
+                      button.btn.btn-danger(ng-click="PopulateDeckArchetypes();")
+                        | Reset Filters
+                      &nbsp;
+                      button.btn.btn-success(ng-click="Calculate();")
+                        | Filter Decks
+                hr
+                .row
+                  .col-sm-2
                     label Cutoff Start Date
                     p.input-group
                       input.form-control(datepicker-popup="", type="text", ng-model="Application.FilterStartDate", is-open="StartDatePicker.opened")
@@ -88,15 +75,18 @@ head
                       span.input-group-btn
                         button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
                           span.glyphicon.glyphicon-calendar
-                .pull-right
-                  button.btn.btn-warning(ng-click="Application.ShowFilters = false;")
-                    | Hide Filters
-                  &nbsp;
-                  button.btn.btn-danger(ng-click="ResetFilters();")
-                    | Reset Filters
-                  &nbsp;
-                  button.btn.btn-success(ng-click="FilterDecks();")
-                    | Filter Decks
+                  form.col-sm-2
+                    .form-group
+                      label Class Filter
+                      div(isteven-multi-select, input-model="Classes", output-model="Application.FilterClasses", button-label="icon", item-label="icon name", tick-property="ticked")
+                  form.col-sm-4
+                    .form-group
+                      label Archetype Filter
+                      div(isteven-multi-select, input-model="Archetypes", output-model="Application.FilterArchetypes", button-label="name", item-label="icon name filtercount", tick-property="ticked")
+                  form.col-sm-4
+                    .form-group
+                      label Event Filter
+                      div(isteven-multi-select, input-model="Events", output-model="Application.FilterEvents", button-label="name", item-label="name filtercount", tick-property="ticked")
         div(ng-view='')
       .push
     // Footer
