@@ -44,49 +44,54 @@ head
       div(ng-include='', src="'partials/navbar.html'")
       .container
         .row
-          .col-sm-12(ng-if="Application.ShowFilters")
-            .panel.panel-primary
+          .col-sm-12(ng-if="Filters.Showing")
+            .panel.panel-info
               .panel-heading
                 | Deck Filters
               .panel-body
                 .row
-                  .col-sm-12
-                    .pull-right
-                      button.btn.btn-warning(ng-click="Application.ShowFilters = false;")
-                        | Hide Filters
-                      &nbsp;
-                      button.btn.btn-danger(ng-click="ResetFilters();")
-                        | Reset Filters
-                      &nbsp;
-                      button.btn.btn-success(ng-click="Calculate();")
-                        | Filter Decks
-                hr
-                .row
-                  .col-sm-2
-                    label Cutoff Start Date
-                    p.input-group
-                      input.form-control(datepicker-popup="", type="text", ng-model="Application.FilterStartDate", is-open="StartDatePicker.opened")
-                      span.input-group-btn
-                        button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
-                          span.glyphicon.glyphicon-calendar
-                    label Cutoff End Date
-                    p.input-group
-                      input.form-control(datepicker-popup="", type="text", ng-model="Application.FilterEndDate", is-open="EndDatePicker.opened")
-                      span.input-group-btn
-                        button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
-                          span.glyphicon.glyphicon-calendar
-                  form.col-sm-2
+                  .col-sm-3
+                      label Cutoff Start Date
+                      p.input-group
+                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
+                        span.input-group-btn
+                          button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
+                            span.glyphicon.glyphicon-calendar
+                      label Cutoff End Date
+                      p.input-group
+                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
+                        span.input-group-btn
+                          button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
+                            span.glyphicon.glyphicon-calendar
+                  form.col-sm-3
                     .form-group
                       label Class Filter
-                      div(isteven-multi-select, input-model="Classes", output-model="FilterClasses", button-label="icon", item-label="icon name", tick-property="ticked")
-                  form.col-sm-4
-                    .form-group
+                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name", tick-property="selected")
+                      br
                       label Archetype Filter
-                      div(isteven-multi-select, input-model="Archetypes", output-model="FilterArchetypes", button-label="name", item-label="icon name filtercount", tick-property="ticked")
-                  form.col-sm-4
+                      div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="5", button-label="name", item-label="icon name countword", tick-property="selected")
+                  form.col-sm-3
+                    .form-group
+                      label Include Decks With Cards
+                      div(isteven-multi-select, input-model="FilteredDeckCards", output-model="Filters.IncludeDecksWithCards", max-labels="5", button-label="name", item-label="name", tick-property="include")
+                      br
+                      label Exclude Decks With Cards
+                      div(isteven-multi-select, input-model="FilteredDeckCards", output-model="Filters.ExcludeDecksWithCards", max-labels="5", button-label="name", item-label="name", tick-property="exclude")
+                  form.col-sm-3
                     .form-group
                       label Event Filter
-                      div(isteven-multi-select, input-model="Events", output-model="FilterEvents", button-label="name", item-label="name filtercount", tick-property="ticked")
+                      div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="5", button-label="name", item-label="name countword", tick-property="selected")
+                hr
+                .row
+                  .col-sm-4
+                      button.btn.btn-block.btn-warning(ng-click="Filters.Showing = false;")
+                        | Hide Filters
+                  .col-sm-4
+                      button.btn.btn-block.btn-danger(ng-click="ResetFilters();")
+                        | Reset Filters
+                  .col-sm-4
+                      button.btn.btn-block.btn-success(ng-click="Calculate();")
+                        | Filter Decks
         div(ng-view='')
       .push
     // Footer

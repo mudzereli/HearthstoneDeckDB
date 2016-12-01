@@ -1,15 +1,7 @@
-function ObjectKeys(o)
-{
-  var keys = [];
-  for(var k in o)
-    keys.push(k);
-  return keys;
-}
-
 function toTitleCase(str)
-{
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
+  {
+      return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
 
 /* AngularJS Module */
 angular.module('AngularApp', [
@@ -99,34 +91,37 @@ angular.module('AngularApp', [
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
-          ShowFilters: true,
           CurrentlySelectedDeckIndex: 0,
-          FilterStartDate: new Date(2016,09,04),
-          FilterEndDate: new Date(),
           DeckListShowing: []
       };
+    $scope.Filters = {
+      Showing: true,
+      StartDate: new Date(2016,09,04),
+      EndDate: new Date(),
+      Classes: [],
+      Archetypes: [],
+      Events: [],
+      IncludeDecksWithCards: [],
+      ExcludeDecksWithCards: []
+    };
+    $scope.Classes = [
+      { name: "Mage"   , icon: "<img src='/assets/Icon_Mage_64.png'>"   , count: 0, color: "#697194", selected: false },
+      { name: "Priest" , icon: "<img src='/assets/Icon_Priest_64.png'>" , count: 0, color: "#A9B4B4", selected: false },
+      { name: "Warlock", icon: "<img src='/assets/Icon_Warlock_64.png'>", count: 0, color: "#4D3850", selected: false },
+      { name: "Shaman" , icon: "<img src='/assets/Icon_Shaman_64.png'>" , count: 0, color: "#33365C", selected: false },
+      { name: "Warrior", icon: "<img src='/assets/Icon_Warrior_64.png'>", count: 0, color: "#702124", selected: false },
+      { name: "Druid"  , icon: "<img src='/assets/Icon_Druid_64.png'>"  , count: 0, color: "#5D3B2B", selected: false },
+      { name: "Rogue"  , icon: "<img src='/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#3F3737", selected: false },
+      { name: "Hunter" , icon: "<img src='/assets/Icon_Hunter_64.png'>" , count: 0, color: "#325F27", selected: false },
+      { name: "Paladin", icon: "<img src='/assets/Icon_Paladin_64.png'>", count: 0, color: "#AC7938", selected: false }
+    ];
+    $scope.FilteredDeckCards = [];
+    $scope.Archetypes = [];
+    $scope.Events = [];
     $scope.DeckHelperData = {};
     $scope.StartDatePicker = {};
     $scope.EndDatePicker = {};
     $scope.DeckHelperCards = [];
-    $scope.FilterClasses = [];
-    $scope.Classes = [
-      { name: "Mage"   , icon: "<img src='/assets/Icon_Mage_64.png'>"   , filtercount: 0, color: "#697194", ticked: false },
-      { name: "Priest" , icon: "<img src='/assets/Icon_Priest_64.png'>" , filtercount: 0, color: "#A9B4B4", ticked: false },
-      { name: "Warlock", icon: "<img src='/assets/Icon_Warlock_64.png'>", filtercount: 0, color: "#4D3850", ticked: false },
-      { name: "Shaman" , icon: "<img src='/assets/Icon_Shaman_64.png'>" , filtercount: 0, color: "#33365C", ticked: false },
-      { name: "Warrior", icon: "<img src='/assets/Icon_Warrior_64.png'>", filtercount: 0, color: "#702124", ticked: false },
-      { name: "Druid"  , icon: "<img src='/assets/Icon_Druid_64.png'>"  , filtercount: 0, color: "#5D3B2B", ticked: false },
-      { name: "Rogue"  , icon: "<img src='/assets/Icon_Rogue_64.png'>"  , filtercount: 0, color: "#3F3737", ticked: false },
-      { name: "Hunter" , icon: "<img src='/assets/Icon_Hunter_64.png'>" , filtercount: 0, color: "#325F27", ticked: false },
-      { name: "Paladin", icon: "<img src='/assets/Icon_Paladin_64.png'>", filtercount: 0, color: "#AC7938", ticked: false }
-    ];
-    $scope.FilterArchetypes = [];
-    $scope.Archetypes = [
-    ];
-    $scope.FilterEvents = [];
-    $scope.Events = [
-    ];
     $scope.DECKDB = JSON_DECK_DB;
     $scope.FILTERDECKDB = [];
     $scope.SetupCharts = function()
@@ -177,91 +172,113 @@ angular.module('AngularApp', [
             'chartArea':{left:0,top:15,width:'90%',height:'75%'}
           };
       };
-    $scope.PopulateDeckArchetypes = function()
+    $scope.PopulateDeckArchetypes = function(wipeAll)
       {
-        $scope.Archetypes = [];
-        $scope.FilterArchetypes = [];
-        for(var i=0;i<$scope.FILTERDECKDB.length;i++)
+        var _deckDB;
+        if(wipeAll)
         {
-          var deck = $scope.FILTERDECKDB[i];
+          $scope.Archetypes = [];
+          _deckDB = $scope.DECKDB;
+        }
+        else
+        {
+          angular.forEach($scope.Archetypes, function(a) {
+            a.count = 0;
+            a.countword = "(" + a.count + " decks)";
+          });
+          _deckDB = $scope.FILTERDECKDB;
+        }
+        angular.forEach(_deckDB, function(deck) {
           var archetype = $scope.LookupArchetype(deck.ARCHETYPE);
-          if((archetype === null || archetype == 'undefined'))
+          if(archetype === null || archetype == 'undefined')
           {
             archetype = {};
             archetype.name = toTitleCase(deck.ARCHETYPE);
-            archetype.filtercount = 1;
+            archetype.count = 1;
             archetype.icon = "<img src='/assets/Icon_" + toTitleCase(deck.CLASS) + "_64.png'>";
-            archetype.ticked = false;
+            archetype.countword = "(" + archetype.count + " decks)";
+            archetype.selected = false;
             $scope.Archetypes.push(archetype);
-          } else archetype.filtercount++;
-        }
+          }
+          else
+          {
+            archetype.count++;
+            archetype.countword = "(" + archetype.count + " decks)";
+          }
+        });
         $scope.Archetypes.sort(function(a,b)
         {
-          return a.filtercount < b.filtercount ? 1
-            : a.filtercount > b.filtercount ? -1
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
             : 0;
         });
       };
-    $scope.PopulateEvents = function()
+    $scope.PopulateEvents = function(wipeAll)
       {
-        $scope.Events = [];
-        //$scope.FilterEvents = [];
-        for(var i=0;i<$scope.FILTERDECKDB.length;i++)
+        var _deckDB;
+        if(wipeAll)
         {
-          var deck = $scope.FILTERDECKDB[i];
+          $scope.Events = [];
+          _deckDB = $scope.DECKDB;
+        }
+        else
+        {
+          angular.forEach($scope.Events, function(evt) {
+            evt.count = 0;
+            evt.countword = "(" + evt.count + " decks)";
+          });
+          _deckDB = $scope.FILTERDECKDB;
+        }
+        angular.forEach(_deckDB, function(deck) {
           var evt = $scope.LookupEvent(deck.EVENT);
           if(evt === null || evt == 'undefined')
           {
             evt = {};
             evt.name = toTitleCase(deck.EVENT);
-            evt.filtercount = 1;
-            evt.ticked = false;
+            evt.count = 1;
+            evt.selected = false;
+            evt.countword = "(" + evt.count + " decks)";
             $scope.Events.push(evt);
-          } else evt.filtercount++;
-        }
+          }
+          else
+          {
+            evt.count++;
+            evt.countword = "(" + evt.count + " decks)";
+          }
+        });
         $scope.Events.sort(function(a,b)
         {
-          return a.filtercount < b.filtercount ? 1
-            : a.filtercount > b.filtercount ? -1
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
             : 0;
         });
       };
     $scope.UpdateCharts = function()
       {
-        for(var m=0;m<$scope.Classes.length;m++)
-        {
-          $scope.Classes[m].filtercount = 0;
-        }
-        for(var i=0;i<$scope.FILTERDECKDB.length;i++)
-        {
-          var deck = $scope.FILTERDECKDB[i];
-          $scope.LookupClass(deck.CLASS).filtercount++;
-        }
+        angular.forEach($scope.Classes,function(c){
+          c.count = 0;
+        });
+        angular.forEach($scope.FILTERDECKDB,function(d){
+          $scope.LookupClass(d.CLASS).count++;
+        });
         $scope.ChartByClass.data.rows = [];
         var r;
-        var list = $scope.FilterClasses.length > 0 ? $scope.FilterClasses : $scope.Classes;
-        for(var n=0;n<list.length;n++)
-        {
-          var cls = list[n];
-          r = {c: [{v: toTitleCase(cls.name)},{v: cls.filtercount}]};
+        var list = $scope.Filters.Classes.length > 0 ? $scope.Filters.Classes : $scope.Classes;
+        angular.forEach(list,function(cc) {
+          r = {c: [{v: toTitleCase(cc.name)},{v: cc.count}]};
           $scope.ChartByClass.data.rows.push(r);
-        }
+        });
         $scope.ChartByArchetype.data.rows = [];
-        list = $scope.FilterArchetypes.length > 0 ? $scope.FilterArchetypes : $scope.Archetypes;
-        for(var j=0;j<list.length;j++)
-        {
-          var archetype = list[j];
-          r = {c: [{v: toTitleCase(archetype.name)},{v: archetype.filtercount}]};
+        list = $scope.Filters.Archetypes.length > 0 ? $scope.Filters.Archetypes : $scope.Archetypes;
+        angular.forEach(list,function(a) {
+          r = {c: [{v: toTitleCase(a.name)},{v: a.count}]};
           $scope.ChartByArchetype.data.rows.push(r);
-        }
+        });
         $scope.ChartByEvent.data.rows = [];
-        list = $scope.FilterEvents.length > 0 ? $scope.FilterEvents : $scope.Events;
-        for(var k=0;k<list.length;k++)
-        {
-          var evt = list[k];
-          r = {c: [{v: toTitleCase(evt.name)},{v: evt.filtercount}]};
+        angular.forEach(list,function(e) {
+          r = {c: [{v: toTitleCase(e.name)},{v: e.count}]};
           $scope.ChartByEvent.data.rows.push(r);
-        }
+        });
         $scope.ChartByClass.options.slices =
         {
           0: { color: $scope.LookupClass($scope.ChartByClass.data.rows[0].c[0].v.toLowerCase()).color },
@@ -281,74 +298,101 @@ angular.module('AngularApp', [
         });
       };
     $scope.LookupClass = function(c)
-    {
-      for(var i = 0;i < $scope.Classes.length;i++)
       {
-        var cl = $scope.Classes[i];
-        if (cl.name.toLowerCase() == c.toLowerCase())
-          return cl;
-      }
-      return null;
-    };
+        var ret = null;
+        angular.forEach($scope.Classes,function(cls){
+          if (cls.name.toLowerCase() == c.toLowerCase())
+          {
+            ret = cls;
+            return;
+          }
+        });
+        return ret;
+      };
     $scope.LookupEvent = function(e)
-    {
-      for(var i = 0;i < $scope.Events.length;i++)
       {
-        var evt = $scope.Events[i];
-        if (evt.name.toLowerCase() == e.toLowerCase())
-          return evt;
-      }
-      return null;
-    };
+        var ret = null;
+        angular.forEach($scope.Events,function(evt){
+          if (evt.name.toLowerCase() == e.toLowerCase())
+          {
+            ret = evt;
+            return;
+          }
+        });
+        return ret;
+      };
     $scope.LookupArchetype = function(a)
-    {
-      for(var i = 0;i < $scope.Archetypes.length;i++)
       {
-        var archetype = $scope.Archetypes[i];
-        if (archetype.name.toLowerCase() == a.toLowerCase())
-          return archetype;
-      }
-      return null;
-    };
+        var ret = null;
+        angular.forEach($scope.Archetypes,function(archetype){
+          if (archetype.name.toLowerCase() == a.toLowerCase())
+          {
+            ret = archetype;
+            return;
+          }
+        });
+        return ret;
+      };
     $scope.FilterArchetypesIncludes = function(a)
-    {
-      var includes = false;
-      for(var i = 0;i < $scope.FilterArchetypes.length;i++)
       {
-        var filter = $scope.FilterArchetypes[i];
-        if (filter.name.toLowerCase() == a.toLowerCase())
-          includes = true;
-      }
-      return includes;
-    };
+        var ret = false;
+        angular.forEach($scope.Filters.Archetypes,function(filter){
+          if (filter.name.toLowerCase() == a.toLowerCase())
+          {
+            ret = true;
+            return;
+          }
+        });
+        return ret;
+      };
     $scope.FilterClassesIncludes = function(c)
-    {
-      if($scope.FilterClasses.length > 0)
-        return true;
-      var includes = false;
-      for(var i = 0;i < $scope.FilterClasses.length;i++)
       {
-        var filter = $scope.FilterClasses[i];
-        if (filter.name.toLowerCase() == c.toLowerCase())
-          includes = true;
-      }
-      return includes;
-    };
+        var ret = false;
+        angular.forEach($scope.Filters.Classes,function(filter){
+          if (filter.name.toLowerCase() == c.toLowerCase())
+            ret = true;
+          return;
+        });
+        return ret;
+      };
     $scope.FilterEventsIncludes = function(e)
-    {
-      if($scope.FilterEvents.length > 0)
-        return true;
-      var includes = false;
-      for(var i = 0;i < $scope.FilterEvents.length;i++)
       {
-        var filter = $scope.FilterEvents[i];
-        if (filter.name.toLowerCase() == e.toLowerCase())
-          includes = true;
-      }
-      return includes;
-    };
+        var ret = false;
+        angular.forEach($scope.Filters.Events,function(filter){
+          if (filter.name.toLowerCase() == e.toLowerCase())
+            ret = true;
+            return;
+        });
+        return ret;
+      };
+    $scope.FilterIncludeCardsIncludes = function(deck)
+      {
+        var ret = false;
+        angular.forEach($scope.Filters.IncludeDecksWithCards,function(filter){
+          angular.forEach(deck.CARDLIST,function(card){
+            if (filter.name.toLowerCase() == card[1].toLowerCase())
+              ret = true;
+              return;
+          });
+        });
+        return ret;
+      };
+    $scope.FilterExcludeCardsIncludes = function(e)
+      {
+        var ret = false;
+        angular.forEach($scope.Filters.ExcludeDecksWithCards,function(filter){
+          angular.forEach(deck.CARDLIST,function(card){
+            if (filter.name.toLowerCase() == card[1].toLowerCase())
+              ret = true;
+              return;
+          });
+        });
+        return ret;
+      };
     $scope.FilterDecks = function()
+    // TODO : MAKE CARDS APPEAR BACK ON FILTER LIST
       {
+        $scope.FilteredDeckCards = [];
         $scope.DeckHelperData = {};
         $scope.DeckHelperCards = [];
         $scope.FILTERDECKDB = [];
@@ -357,11 +401,13 @@ angular.module('AngularApp', [
         {
           var deck = $scope.DECKDB[i];
           var dt = new Date(deck.DATE);
-          if($scope.FilterClasses.length === 0 || $scope.FilterClassesIncludes(deck.CLASS))
-            if($scope.FilterArchetypes.length === 0 || $scope.FilterArchetypesIncludes(deck.ARCHETYPE))
-              if($scope.FilterEvents.length === 0 || $scope.FilterEvents.includes(deck.EVENT))
-                if(dt >= $scope.Application.FilterStartDate)
-                  if(dt <= $scope.Application.FilterEndDate)
+          if($scope.Filters.Classes.length === 0 || $scope.FilterClassesIncludes(deck.CLASS))
+            if($scope.Filters.Archetypes.length === 0 || $scope.FilterArchetypesIncludes(deck.ARCHETYPE))
+              if($scope.Filters.Events.length === 0 || $scope.FilterEventsIncludes(deck.EVENT))
+                if($scope.Filters.IncludeDecksWithCards.length === 0 || $scope.FilterIncludeCardsIncludes(deck))
+                  if($scope.Filters.ExcludeDecksWithCards.length === 0 || !$scope.FilterExcludeCardsIncludes(deck))
+                    if(dt >= $scope.Filters.StartDate)
+                      if(dt <= $scope.Filters.EndDate)
                     {
                       $scope.FILTERDECKDB.push(deck);
                       for(var j=0;j<deck.CARDLIST.length;j++)
@@ -372,6 +418,9 @@ angular.module('AngularApp', [
                         if(!$scope.DeckHelperCards.includes(cardName))
                         {
                           $scope.DeckHelperCards.push(cardName);
+                          // TODO : MAKE CARDS APPEAR BACK ON FILTER LIST
+                          var _card = {name: cardName, include: false, exclude: false};
+                          $scope.FilteredDeckCards.push(_card);
                           $scope.DeckHelperData[cardName] = {};
                           $scope.DeckHelperData[cardName].SEENCOUNT = 1;
                           $scope.DeckHelperData[cardName].TOTALCOUNT = cardCount;
@@ -384,6 +433,11 @@ angular.module('AngularApp', [
                       }
                     }
         }
+        $scope.FilteredDeckCards.sort(function(a,b){
+          return  a.name < b.name ? -1
+            : a.name > b.name ? 1
+            : 0;
+        });
         $scope.DeckHelperCards.sort(function(a,b){
           return  $scope.DeckHelperData[a].SEENCOUNT < $scope.DeckHelperData[b].SEENCOUNT ? 1
             : $scope.DeckHelperData[a].SEENCOUNT > $scope.DeckHelperData[b].SEENCOUNT ? -1
@@ -395,66 +449,48 @@ angular.module('AngularApp', [
             : 0;
         });
       };
-    $scope.ToggleFilters = function()
-      {
-        $scope.Application.ShowFilters = !$scope.Application.ShowFilters;
-      };
     $scope.SelectDeck = function(index)
       {
         $scope.Application.CurrentlySelectedDeck = $scope.FILTERDECKDB[index];
       };
-    $scope.OpenStartDatePicker = function ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      $scope.StartDatePicker.opened = true;
-    };
-    $scope.OpenEndDatePicker = function ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      $scope.EndDatePicker.opened = true;
-    };
+    $scope.OpenStartDatePicker = function ($event)
+      {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.StartDatePicker.opened = true;
+      };
+    $scope.OpenEndDatePicker = function ($event)
+      {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.EndDatePicker.opened = true;
+      };
     $scope.ResetFilters = function()
-    {
-      $scope.FilterClasses = [];
-      $scope.FilterArchetypes = [];
-      $scope.FilterEvents = [];
-      // $scope.Application.FilterStartDate = new Date(2016,09,04);
-      // $scope.Application.FilterEndDate = new Date();
-      // $scope.Calculate();
-    };
+      {
+        angular.forEach($scope.Classes,function(c){
+          c.selected = false;
+        });
+        angular.forEach($scope.Archetypes,function(c){
+          c.selected = false;
+        });
+        angular.forEach($scope.Events,function(c){
+          c.selected = false;
+        });
+        $scope.Filters.StartDate = new Date(2016,09,04);
+        $scope.Filters.EndDate = new Date();
+        $scope.Calculate();
+      };
     $scope.Calculate = function()
     {
       $scope.FilterDecks();
-      $scope.PopulateDeckArchetypes();
-      $scope.PopulateEvents();
+      $scope.PopulateDeckArchetypes(false);
+      $scope.PopulateEvents(false);
       $scope.UpdateCharts();
       $scope.Application.CurrentlySelectedDeckIndex = 0;
       $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
     };
+    $scope.PopulateDeckArchetypes(true);
+    $scope.PopulateEvents(true);
     $scope.SetupCharts();
     $scope.Calculate();
-    // $scope.$watch('FilterClasses', function(n,o) {
-    //   $scope.FilterDecks();
-    //   $scope.PopulateDeckArchetypes();
-    //   $scope.PopulateEvents();
-    //   $scope.UpdateCharts();
-    //   $scope.Application.CurrentlySelectedDeckIndex = 0;
-    //   $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
-    // });
-    // $scope.$watch('FilterArchetypes', function(n,o) {
-    //   $scope.FilterDecks();
-    //   $scope.PopulateDeckArchetypes();
-    //   $scope.PopulateEvents();
-    //   $scope.UpdateCharts();
-    //   $scope.Application.CurrentlySelectedDeckIndex = 0;
-    //   $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
-    // });
-    // $scope.$watch('FilterEvents', function(n,o) {
-    //   $scope.FilterDecks();
-    //   $scope.PopulateDeckArchetypes();
-    //   $scope.PopulateEvents();
-    //   $scope.UpdateCharts();
-    //   $scope.Application.CurrentlySelectedDeckIndex = 0;
-    //   $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
-    // });
 }]);
