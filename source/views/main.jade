@@ -3,7 +3,7 @@
     .panel.panel-success
       .panel-heading
         | Filtered Deck Statistics
-        .pull-right {{ Application.FilterStartDate | date:"MM/dd/yyyy" }} - {{ Application.FilterEndDate | date:"MM/dd/yyyy" }}
+        .pull-right {{ Filters.StartDate | date:"MM/dd/yyyy" }} - {{ Filters.EndDate | date:"MM/dd/yyyy" }}
       .panel-body
         .row
           .col-sm-6
