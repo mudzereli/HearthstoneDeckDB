@@ -92,7 +92,8 @@ angular.module('AngularApp', [
       {
           Name: 'Hearthstone Deck DB',
           CurrentlySelectedDeckIndex: 0,
-          DeckListShowing: []
+          DeckListShowing: [],
+          BaseURL: '/HearthstoneDeckDB'
       };
     $scope.Filters = {
       Showing: true,
@@ -105,15 +106,15 @@ angular.module('AngularApp', [
       ExcludeDecksWithCards: []
     };
     $scope.Classes = [
-      { name: "Mage"   , icon: "<img src='/assets/Icon_Mage_64.png'>"   , count: 0, color: "#69CCF0", selected: false },
-      { name: "Priest" , icon: "<img src='/assets/Icon_Priest_64.png'>" , count: 0, color: "#F0F0F0", selected: false },
-      { name: "Warlock", icon: "<img src='/assets/Icon_Warlock_64.png'>", count: 0, color: "#9482C9", selected: false },
-      { name: "Shaman" , icon: "<img src='/assets/Icon_Shaman_64.png'>" , count: 0, color: "#0070DE", selected: false },
-      { name: "Warrior", icon: "<img src='/assets/Icon_Warrior_64.png'>", count: 0, color: "#C79C6E", selected: false },
-      { name: "Druid"  , icon: "<img src='/assets/Icon_Druid_64.png'>"  , count: 0, color: "#FF7D0A", selected: false },
-      { name: "Rogue"  , icon: "<img src='/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#FFF569", selected: false },
-      { name: "Hunter" , icon: "<img src='/assets/Icon_Hunter_64.png'>" , count: 0, color: "#ABD473", selected: false },
-      { name: "Paladin", icon: "<img src='/assets/Icon_Paladin_64.png'>", count: 0, color: "#F58CBA", selected: false }
+      { name: "Mage"   , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Mage_64.png'>"   , count: 0, color: "#69CCF0", selected: false },
+      { name: "Priest" , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Priest_64.png'>" , count: 0, color: "#F0F0F0", selected: false },
+      { name: "Warlock", icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Warlock_64.png'>", count: 0, color: "#9482C9", selected: false },
+      { name: "Shaman" , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Shaman_64.png'>" , count: 0, color: "#0070DE", selected: false },
+      { name: "Warrior", icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Warrior_64.png'>", count: 0, color: "#C79C6E", selected: false },
+      { name: "Druid"  , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Druid_64.png'>"  , count: 0, color: "#FF7D0A", selected: false },
+      { name: "Rogue"  , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#FFF569", selected: false },
+      { name: "Hunter" , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Hunter_64.png'>" , count: 0, color: "#ABD473", selected: false },
+      { name: "Paladin", icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Paladin_64.png'>", count: 0, color: "#F58CBA", selected: false }
     ];
     $scope.FilteredDeckCards = [];
     $scope.Archetypes = [];
@@ -199,7 +200,7 @@ angular.module('AngularApp', [
             archetype = {};
             archetype.name = toTitleCase(deck.ARCHETYPE);
             archetype.count = 1;
-            archetype.icon = "<img src='/assets/Icon_" + toTitleCase(deck.CLASS) + "_64.png'>";
+            archetype.icon = "<img src='" + $scope.Application.BaseURL + "/assets/Icon_" + toTitleCase(deck.CLASS) + "_64.png'>";
             archetype.countword = "(" + archetype.count + " decks)";
             archetype.selected = false;
             $scope.Archetypes.push(archetype);
