@@ -99,7 +99,7 @@ angular.module('AngularApp', [
     $scope.Filters =
       {
         Showing: true,
-        StartDate: new Date(2016,09,04),
+        StartDate: new Date(2016,12,01),
         EndDate: new Date(),
         Classes: [],
         Archetypes: [],
@@ -537,7 +537,7 @@ angular.module('AngularApp', [
           c.include = false;
           c.exclude = false;
         });
-        $scope.Filters.StartDate = new Date(2016,09,04);
+        $scope.Filters.StartDate = new Date(2016,12,01);
         $scope.Filters.EndDate = new Date();
       };
     $scope.Calculate = function()
