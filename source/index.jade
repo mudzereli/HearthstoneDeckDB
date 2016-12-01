@@ -75,22 +75,21 @@ head
                     .form-group
                       label Class Filter
                       div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name", tick-property="selected")
-                      // br
-                  form.col-sm-3
+                  //form.col-sm-3
                     .form-group
                       label Archetype Filter
                       div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected")
-                      //- form.col-sm-3
-                      //-   .form-group
-                      //-     label Include Decks With Cards
-                      //-     div(isteven-multi-select, input-model="FilteredDeckCards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name", tick-property="include")
-                      //-     br
-                      //-     label Exclude Decks With Cards
-                      //-     div(isteven-multi-select, input-model="FilteredDeckCards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name", tick-property="exclude")
                   form.col-sm-3
                     .form-group
                       label Event Filter
                       div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
+                  form.col-sm-3
+                    .form-group
+                      label Include Decks With Cards
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include")
+                    .form-group
+                      label Exclude Decks With Cards
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude")
         div(ng-view='')
       .push
     // Footer
