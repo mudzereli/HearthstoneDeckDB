@@ -483,8 +483,6 @@ angular.module('AngularApp', [
                         if(!$scope.DeckHelperCards.includes(cardName))
                         {
                           $scope.DeckHelperCards.push(cardName);
-                          // TODO : MAKE CARDS APPEAR BACK ON FILTER LIST
-                          var _card = {name: cardName, include: false, exclude: false};
                           $scope.DeckHelperData[cardName] = {};
                           $scope.DeckHelperData[cardName].SEENCOUNT = 1;
                           $scope.DeckHelperData[cardName].TOTALCOUNT = cardCount;
