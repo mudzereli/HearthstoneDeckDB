@@ -10,7 +10,7 @@
                   th Seen%
                 tbody
                   tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 >= 90")
-                    td 
+                    td
                       strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
                     td
                       strong {{ card }}
@@ -26,7 +26,7 @@
                   th Seen%
                 tbody
                   tr(ng-repeat="card in DeckHelperCards | limitTo: 30", ng-if="DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 < 90 && DeckHelperData[card].SEENCOUNT / FILTERDECKDB.length * 100 >= 65")
-                    td 
+                    td
                       strong {{ DeckHelperData[card].TOTALCOUNT / DeckHelperData[card].SEENCOUNT | number: 1 }}
                     td
                       strong {{ card }}

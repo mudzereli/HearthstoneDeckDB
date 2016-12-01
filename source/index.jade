@@ -44,11 +44,19 @@ head
       div(ng-include='', src="'partials/navbar.html'")
       .container
         .row
-          .col-sm-12(ng-if="Filters.Showing")
+          .col-sm-12
             .panel.panel-info
               .panel-heading
-                | Deck Filters
-              .panel-body
+                span(style="font-size: 1.5em;") Deck Filters 
+                small ({{ FILTERDECKDB.length }} decks)
+                .pull-right
+                  button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
+                  &nbsp;
+                  button.btn.btn-sm.btn-danger.span.glyphicon.glyphicon-refresh(tooltip="Reset All Filters", ng-click="ResetFilters();")
+                  &nbsp;
+                  button.btn.btn-sm.btn-success.span.glyphicon.glyphicon-filter(tooltip="Apply Filter Settings", ng-click="Calculate();")
+                .clearfix
+              .panel-body(ng-if="Filters.Showing")
                 .row
                   .col-sm-3
                       label Cutoff Start Date
@@ -81,17 +89,6 @@ head
                     .form-group
                       label Event Filter
                       div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
-                hr
-                .row
-                  .col-sm-4
-                      button.btn.btn-block.btn-warning(ng-click="Filters.Showing = false;")
-                        | Hide Filters
-                  .col-sm-4
-                      button.btn.btn-block.btn-danger(ng-click="ResetFilters();")
-                        | Reset Filters
-                  .col-sm-4
-                      button.btn.btn-block.btn-success(ng-click="Calculate();")
-                        | Filter Decks
         div(ng-view='')
       .push
     // Footer
