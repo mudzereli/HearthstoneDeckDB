@@ -105,15 +105,15 @@ angular.module('AngularApp', [
       ExcludeDecksWithCards: []
     };
     $scope.Classes = [
-      { name: "Mage"   , icon: "<img src='/assets/Icon_Mage_64.png'>"   , count: 0, color: "#697194", selected: false },
-      { name: "Priest" , icon: "<img src='/assets/Icon_Priest_64.png'>" , count: 0, color: "#A9B4B4", selected: false },
-      { name: "Warlock", icon: "<img src='/assets/Icon_Warlock_64.png'>", count: 0, color: "#4D3850", selected: false },
-      { name: "Shaman" , icon: "<img src='/assets/Icon_Shaman_64.png'>" , count: 0, color: "#33365C", selected: false },
-      { name: "Warrior", icon: "<img src='/assets/Icon_Warrior_64.png'>", count: 0, color: "#702124", selected: false },
-      { name: "Druid"  , icon: "<img src='/assets/Icon_Druid_64.png'>"  , count: 0, color: "#5D3B2B", selected: false },
-      { name: "Rogue"  , icon: "<img src='/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#3F3737", selected: false },
-      { name: "Hunter" , icon: "<img src='/assets/Icon_Hunter_64.png'>" , count: 0, color: "#325F27", selected: false },
-      { name: "Paladin", icon: "<img src='/assets/Icon_Paladin_64.png'>", count: 0, color: "#AC7938", selected: false }
+      { name: "Mage"   , icon: "<img src='/assets/Icon_Mage_64.png'>"   , count: 0, color: "#69CCF0", selected: false },
+      { name: "Priest" , icon: "<img src='/assets/Icon_Priest_64.png'>" , count: 0, color: "#F0F0F0", selected: false },
+      { name: "Warlock", icon: "<img src='/assets/Icon_Warlock_64.png'>", count: 0, color: "#9482C9", selected: false },
+      { name: "Shaman" , icon: "<img src='/assets/Icon_Shaman_64.png'>" , count: 0, color: "#0070DE", selected: false },
+      { name: "Warrior", icon: "<img src='/assets/Icon_Warrior_64.png'>", count: 0, color: "#C79C6E", selected: false },
+      { name: "Druid"  , icon: "<img src='/assets/Icon_Druid_64.png'>"  , count: 0, color: "#FF7D0A", selected: false },
+      { name: "Rogue"  , icon: "<img src='/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#FFF569", selected: false },
+      { name: "Hunter" , icon: "<img src='/assets/Icon_Hunter_64.png'>" , count: 0, color: "#ABD473", selected: false },
+      { name: "Paladin", icon: "<img src='/assets/Icon_Paladin_64.png'>", count: 0, color: "#F58CBA", selected: false }
     ];
     $scope.FilteredDeckCards = [];
     $scope.Archetypes = [];
@@ -172,6 +172,10 @@ angular.module('AngularApp', [
             'chartArea':{left:0,top:15,width:'90%',height:'75%'}
           };
       };
+    $scope.PopulateFilterCards = function()
+    {
+
+    };
     $scope.PopulateDeckArchetypes = function(wipeAll)
       {
         var _deckDB;
@@ -263,21 +267,27 @@ angular.module('AngularApp', [
         });
         $scope.ChartByClass.data.rows = [];
         var r;
-        var list = $scope.Filters.Classes.length > 0 ? $scope.Filters.Classes : $scope.Classes;
+        var list = $scope.Classes;
         angular.forEach(list,function(cc) {
           r = {c: [{v: toTitleCase(cc.name)},{v: cc.count}]};
           $scope.ChartByClass.data.rows.push(r);
         });
         $scope.ChartByArchetype.data.rows = [];
-        list = $scope.Filters.Archetypes.length > 0 ? $scope.Filters.Archetypes : $scope.Archetypes;
+        list = $scope.Archetypes;
         angular.forEach(list,function(a) {
           r = {c: [{v: toTitleCase(a.name)},{v: a.count}]};
           $scope.ChartByArchetype.data.rows.push(r);
         });
         $scope.ChartByEvent.data.rows = [];
+        list = $scope.Events;
         angular.forEach(list,function(e) {
           r = {c: [{v: toTitleCase(e.name)},{v: e.count}]};
           $scope.ChartByEvent.data.rows.push(r);
+        });
+        $scope.ChartByClass.data.rows.sort(function(a,b){
+          return b.c[1].v < a.c[1].v ? -1
+            : b.c[1].v > a.c[1].v ? 1
+            : 0;
         });
         $scope.ChartByClass.options.slices =
         {
@@ -291,11 +301,6 @@ angular.module('AngularApp', [
           7: { color: $scope.LookupClass($scope.ChartByClass.data.rows[7].c[0].v.toLowerCase()).color },
           8: { color: $scope.LookupClass($scope.ChartByClass.data.rows[8].c[0].v.toLowerCase()).color }
         };
-        $scope.ChartByClass.data.rows.sort(function(a,b){
-          return b.c[1].v < a.c[1].v ? -1
-            : b.c[1].v > a.c[1].v ? 1
-            : 0;
-        });
       };
     $scope.LookupClass = function(c)
       {
@@ -478,11 +483,12 @@ angular.module('AngularApp', [
         });
         $scope.Filters.StartDate = new Date(2016,09,04);
         $scope.Filters.EndDate = new Date();
-        $scope.Calculate();
+        //$scope.Calculate();
       };
     $scope.Calculate = function()
     {
       $scope.FilterDecks();
+      //$scope.UpdateCharts();
       $scope.PopulateDeckArchetypes(false);
       $scope.PopulateEvents(false);
       $scope.UpdateCharts();
