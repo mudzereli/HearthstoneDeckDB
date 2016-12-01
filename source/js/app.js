@@ -117,9 +117,9 @@ angular.module('AngularApp', [
       { name: "Hunter" , icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Hunter_64.png'>" , count: 0, color: "#ABD473", selected: false },
       { name: "Paladin", icon: "<img src='" + $scope.Application.BaseURL + "/assets/Icon_Paladin_64.png'>", count: 0, color: "#F58CBA", selected: false }
     ];
-    $scope.Cards = [];
     $scope.Archetypes = [];
     $scope.Events = [];
+    $scope.Cards = [];
     $scope.DeckHelperData = {};
     $scope.StartDatePicker = {};
     $scope.EndDatePicker = {};
