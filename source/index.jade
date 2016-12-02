@@ -1,95 +1,95 @@
-                            span.glyphicon.glyphicon-calendar
-                            span.glyphicon.glyphicon-calendar
-                          button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
-                          button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
-                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
-                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
-                        span.input-group-btn
-                        span.input-group-btn
-                      div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected")
-                      div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude")
-                      div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include")
-                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name", tick-property="selected")
-                      div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
-                      label Archetype Filter
-                      label Class Filter
-                      label Cutoff End Date
-                      label Cutoff Start Date
-                      label Event Filter
-                      label Exclude Decks With Cards
-                      label Include Decks With Cards
-                      p.input-group
-                      p.input-group
-                    .form-group
-                    .form-group
-                    .form-group
-                    .form-group
-                    .form-group
-                  &nbsp;
-                  &nbsp;
-                  .col-sm-3
-                  button.btn.btn-sm.btn-danger.span.glyphicon.glyphicon-refresh(tooltip="Reset All Filters", ng-click="ResetFilters();")
-                  button.btn.btn-sm.btn-success.span.glyphicon.glyphicon-filter(tooltip="Apply Filter Settings", ng-click="Calculate();")
-                  button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
-                  form.col-sm-3
-                  form.col-sm-3
-                  form.col-sm-3
-                .clearfix
-                .pull-right
-                .row
-                small ({{ FILTERDECKDB.length }} decks)
-                span(style="font-size: 1.5em;") Deck Filters 
-              .panel-body(ng-if="Filters.Showing")
-              .panel-heading
-            .panel.panel-info
-          .col-sm-12
-        .row
-        a(href='http://browsehappy.com/')
-        div(ng-view='')
-        strong outdated 
-        | You are using an 
-        | browser. Please 
-        | upgrade your browser to improve your experience.
-      .container
-      .push
-      // Navigation Bar
-      <!--[if lte IE 8]>
-      <![endif]-->
-      div(ng-include='', src="'partials/navbar.html'")
-      p.browserupgrade 
-    .wrapper
-    // Footer
-    // Non-Footer Content
-    div(ng-include='', src="'partials/footer.html'")
+doctype html
+html.no-js(xmlns:ng='http://angularjs.org', lang='en')
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')    
+  title Hearthstone Deck DB
+  meta(name='description', content='')
+  meta(name='viewport', content='width=device-width, initial-scale=1')
+  link(rel='apple-touch-icon', href='apple-touch-icon.png')
   // CSS libraries
+  link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css')
+  link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.css')
+  <!--[if lte IE 8]>
+  link(rel='stylesheet', type='text/css', href='bootstrap-3.3.4-dist/css/bootstrap.min.css')
+  <![endif]-->
   // Grunt Generated CSS
-  // Grunt Generated Javascript
+  link(rel='stylesheet', type='text/css', href='stylesheet.min.css')
   // Javascript libraries
   //script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js')
   //script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js')
-  <!--[if lte IE 8]>
-  <![endif]-->
-  body#ng-app(ng-app='AngularApp', ng-controller='AppController')
-  link(rel='apple-touch-icon', href='apple-touch-icon.png')
-  link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.css')
-  link(rel='stylesheet', type='text/css', href='//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css')
-  link(rel='stylesheet', type='text/css', href='bootstrap-3.3.4-dist/css/bootstrap.min.css')
-  link(rel='stylesheet', type='text/css', href='stylesheet.min.css')
-  meta(charset='utf-8')
-  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')    
-  meta(name='description', content='')
-  meta(name='viewport', content='width=device-width, initial-scale=1')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.1.5/angular-local-storage.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular-route.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js')
-  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js')
   script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js')
-  script(type='text/javascript', src='javascript.min.js?12.01.2016.3')
-  title Hearthstone Deck DB
-doctype html
-head
-html.no-js(xmlns:ng='http://angularjs.org', lang='en')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular-route.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-css/1.0.7/angular-css.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.1.5/angular-local-storage.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js')
+  script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.js')
+  // Grunt Generated Javascript
+  script(type='text/javascript', src='javascript.min.js?12.01.2016.2')
+  body#ng-app(ng-app='AngularApp', ng-controller='AppController')
+    // Non-Footer Content
+    .wrapper
+      <!--[if lte IE 8]>
+      p.browserupgrade 
+        | You are using an 
+        strong outdated 
+        | browser. Please 
+        a(href='http://browsehappy.com/')
+        | upgrade your browser to improve your experience.
+      <![endif]-->
+      // Navigation Bar
+      div(ng-include='', src="'partials/navbar.html'")
+      .container
+        .row
+          .col-sm-12
+            .panel.panel-info
+              .panel-heading
+                span(style="font-size: 1.5em;") Deck Filters 
+                small ({{ FILTERDECKDB.length }} decks)
+                .pull-right
+                  button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
+                  &nbsp;
+                  button.btn.btn-sm.btn-danger.span.glyphicon.glyphicon-refresh(tooltip="Reset All Filters", ng-click="ResetFilters();")
+                  &nbsp;
+                  button.btn.btn-sm.btn-success.span.glyphicon.glyphicon-filter(tooltip="Apply Filter Settings", ng-click="Calculate();")
+                .clearfix
+              .panel-body(ng-if="Filters.Showing")
+                .row
+                  .col-sm-3
+                      label Cutoff Start Date
+                      p.input-group
+                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
+                        span.input-group-btn
+                          button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
+                            span.glyphicon.glyphicon-calendar
+                      label Cutoff End Date
+                      p.input-group
+                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
+                        span.input-group-btn
+                          button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
+                            span.glyphicon.glyphicon-calendar
+                  form.col-sm-3
+                    .form-group
+                      label Class Filter
+                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name", tick-property="selected")
+                    .form-group
+                      label Archetype Filter
+                      div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected")
+                  form.col-sm-3
+                    .form-group
+                      label Event Filter
+                      div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
+                  form.col-sm-3
+                    .form-group
+                      label Include Decks With Cards
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include")
+                    .form-group
+                      label Exclude Decks With Cards
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude")
+        div(ng-view='')
+      .push
+    // Footer
+    div(ng-include='', src="'partials/footer.html'")
