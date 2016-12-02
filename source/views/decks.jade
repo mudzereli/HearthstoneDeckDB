@@ -6,7 +6,7 @@
       .panel-body
         .table-responsive
           div(accordion, close-others="oneAtATime")
-            div(accordion-group, is-open="decklist.open", ng-repeat="deck in FILTERDECKDB | limitTo: 150 track by $index", class="panel-default")
+            div(accordion-group, is-open="decklist.open", ng-repeat="deck in FILTERDECKDB | limitTo: 50 track by $index", class="panel-default")
               div(accordion-heading)
                 .row(class="fg-{{ deck.CLASS }}", style="font-size: 0.9em;")
                   .col-sm-1
@@ -16,7 +16,8 @@
                   .col-sm-2 {{ deck.PLAYER | titleCase }} 
                   .col-sm-4 {{ deck.EVENT | titleCase }} 
                   .col-sm-1 
-                    .pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': decklist.open, 'glyphicon-chevron-right': !decklist.open}")
+                    .pull-right
+                      span.glyphicon(ng-class="{'glyphicon-chevron-down': decklist.open, 'glyphicon-chevron-right': !decklist.open}")
               table.table.table-striped.table-condensed(style="font-size: 0.7em;")
                 thead
                   th #
@@ -26,3 +27,6 @@
                     td(style="padding: 1px; margin: 1px;")
                       strong {{ card[0] }}
                     td(style="padding: 1px; margin: 1px;") {{ card[1] }}
+              button.btn.btn-success(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(deck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
+                | Copy Card List to Clipboard 
+                span.glyphicon.glyphicon-copy
