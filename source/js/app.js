@@ -10,7 +10,8 @@ angular.module('AngularApp', [
     'door3.css',
     'LocalStorageModule',
     'googlechart',
-    'isteven-multi-select'
+    'isteven-multi-select',
+    'ngclipboard'
 ])
 .filter('titleCase', function() {
   return function(input) {
@@ -128,6 +129,11 @@ angular.module('AngularApp', [
     $scope.DeckHelperCards = [];
     $scope.DECKDB = JSON_DECK_DB;
     $scope.FILTERDECKDB = [];
+    $scope.Tier1Cards = [];
+    $scope.Tier2Cards = [];
+    $scope.Tier3Cards = [];
+    $scope.Tier4Cards = [];
+    $scope.CopyClipboardCards = [];
     $scope.SetupCharts = function()
       {
         // Class Chart
@@ -456,6 +462,14 @@ angular.module('AngularApp', [
         });
         return ret;
       };
+    $scope.GetCardCount = function(cards)
+      {
+        var c = 0;
+        angular.forEach(cards,function(card) {
+          c = c + Math.round(card.TOTALCOUNT / card.SEENCOUNT);
+        });
+        return c;
+      };
     $scope.FilterDecks = function()
       {
         $scope.DeckHelperData = {};
@@ -484,6 +498,7 @@ angular.module('AngularApp', [
                         {
                           $scope.DeckHelperCards.push(cardName);
                           $scope.DeckHelperData[cardName] = {};
+                          $scope.DeckHelperData[cardName].NAME = cardName;
                           $scope.DeckHelperData[cardName].SEENCOUNT = 1;
                           $scope.DeckHelperData[cardName].TOTALCOUNT = cardCount;
                         }
@@ -505,6 +520,11 @@ angular.module('AngularApp', [
             : a.DATE > b.DATE ? -1
             : 0;
         });
+        $scope.Tier1Cards = $scope.GetFilteredCardsBetween(90,101);
+        $scope.Tier2Cards = $scope.GetFilteredCardsBetween(65,90);
+        $scope.Tier3Cards = $scope.GetFilteredCardsBetween(35,65);
+        $scope.Tier4Cards = $scope.GetFilteredCardsBetween(0,35);
+        $scope.CopyClipboardCards = $scope.GetFilteredCardsBetween(65,101);
       };
     $scope.SelectDeck = function(index)
       {
@@ -521,6 +541,37 @@ angular.module('AngularApp', [
         $event.preventDefault();
         $event.stopPropagation();
         $scope.EndDatePicker.opened = true;
+      };
+    $scope.GetTextListFromDeckList = function(cards)
+      {
+        var list = "";
+        angular.forEach(cards,function(card) {
+          list = list + card[0] + " " + card[1] + "\n";
+        });
+        return list;
+      };
+    $scope.GetTextListFromCardGroup = function(cards)
+      {
+        var list = "";
+        angular.forEach(cards,function(card) {
+          list = list + Math.round(card.TOTALCOUNT / card.SEENCOUNT) + " " + card.NAME + "\n";
+        });
+        return list;
+      };
+    $scope.GetFilteredCardsBetween = function(lowPCT,highPCT)
+      {
+        var list = [];
+        var deckcount = $scope.FILTERDECKDB.length;
+        var seenPCT = 0;
+        var card;
+        angular.forEach($scope.DeckHelperCards,function(cardName) {
+          card = $scope.DeckHelperData[cardName];
+          seenPCT = card.SEENCOUNT / deckcount * 100;
+          if(seenPCT >= lowPCT && seenPCT < highPCT)
+            list.push(card);
+        });
+        //alert(list.length);
+        return list;
       };
     $scope.ResetFilters = function()
       {

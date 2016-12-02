@@ -27,6 +27,8 @@ head
   script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.1.5/angular-local-storage.min.js')
   script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js')
   script(type='text/javascript', src='//cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.js')
+  script(type='text/javascript', src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.15/clipboard.min.js")
+  script(type='text/javascript', src='ngclipboard-dist/ngclipboard.min.js')
   // Grunt Generated Javascript
   script(type='text/javascript', src='javascript.min.js?12.01.2016.3')
   body#ng-app(ng-app='AngularApp', ng-controller='AppController')
@@ -48,7 +50,7 @@ head
             .panel.panel-info
               .panel-heading
                 span(style="font-size: 1.5em;") Deck Filters 
-                small ({{ FILTERDECKDB.length }} decks)
+                small ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
                 .pull-right
                   button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
                   &nbsp;
