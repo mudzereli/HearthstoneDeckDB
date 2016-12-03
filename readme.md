@@ -1,4 +1,5 @@
 # Hearthstone Deck DB
+[Visit the Site!](https://mudzereli.github.io/HearthstoneDeckDB/#/)
 
 ###Goals of Site:
 - Assist in competitive deckbuilding without "Netdecking" card-for-card.
