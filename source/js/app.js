@@ -185,6 +185,7 @@ angular.module('AngularApp', [
     $scope.PopulateCards = function(wipeAll)
       {
           var _deckDB;
+          var card;
           if(wipeAll)
           {
             $scope.Cards = [];
@@ -192,20 +193,26 @@ angular.module('AngularApp', [
           }
           else
           {
-            angular.forEach($scope.Cards, function(c) {
-              c.count = 0;
-              c.countword = "(" + c.count + " decks)";
-            });
+            for(var i=0;i<$scope.Cards.length;i++)
+            {
+              card = $scope.Cards[i];
+              card.count = 0;
+              card.countword = "(" + card.count + " decks)";
+            }
             _deckDB = $scope.FILTERDECKDB;
           }
-          angular.forEach(_deckDB, function(deck) {
-            angular.forEach(deck.CARDLIST, function(c) {
-              var card = $scope.LookupCard(c[1]);
+          for(var j=0;j<_deckDB.length;j++)
+          {
+            var deck = _deckDB[j];
+            for(var k=0;k<deck.CARDLIST.length;k++)
+            {
+              var cardflat = deck.CARDLIST[k];
+              card = $scope.LookupCard(cardflat[1]);
               if(card === null || card == 'undefined')
               {
                 card = {};
-                card.name = c[1];
-                card.count = c[0];
+                card.name = cardflat[1];
+                card.count = cardflat[0];
                 card.countword = "(" + card.count + " decks)";
                 card.include = false;
                 card.exclude = false;
@@ -216,8 +223,8 @@ angular.module('AngularApp', [
                 card.count++;
                 card.countword = "(" + card.count + " decks)";
               }
-            });
-          });
+            }
+          }
           $scope.Cards.sort(function(a,b)
           {
             return a.count < b.count ? 1
@@ -228,6 +235,7 @@ angular.module('AngularApp', [
     $scope.PopulateDeckArchetypes = function(wipeAll)
       {
         var _deckDB;
+        var archetype;
         if(wipeAll)
         {
           $scope.Archetypes = [];
@@ -235,14 +243,18 @@ angular.module('AngularApp', [
         }
         else
         {
-          angular.forEach($scope.Archetypes, function(a) {
-            a.count = 0;
-            a.countword = "(" + a.count + " decks)";
-          });
+          for(var i=0;i<$scope.Archetypes.length;i++)
+          {
+            archetype = $scope.Archetypes[i];
+            archetype.count = 0;
+            archetype.countword = "(" + archetype.count + " decks)";
+          }
           _deckDB = $scope.FILTERDECKDB;
         }
-        angular.forEach(_deckDB, function(deck) {
-          var archetype = $scope.LookupArchetype(deck.ARCHETYPE);
+        for(var j=0;j<_deckDB.length;j++)
+        {
+          var deck = _deckDB[j];
+          archetype = $scope.LookupArchetype(deck.ARCHETYPE);
           if(archetype === null || archetype == 'undefined')
           {
             archetype = {};
@@ -258,7 +270,7 @@ angular.module('AngularApp', [
             archetype.count++;
             archetype.countword = "(" + archetype.count + " decks)";
           }
-        });
+        }
         $scope.Archetypes.sort(function(a,b)
         {
           return a.count < b.count ? 1
@@ -269,6 +281,7 @@ angular.module('AngularApp', [
     $scope.PopulateEvents = function(wipeAll)
       {
         var _deckDB;
+        var evt;
         if(wipeAll)
         {
           $scope.Events = [];
@@ -276,14 +289,18 @@ angular.module('AngularApp', [
         }
         else
         {
-          angular.forEach($scope.Events, function(evt) {
+          for(var i=0;i<$scope.Events.length;i++)
+          {
+            evt = $scope.Events[i];
             evt.count = 0;
             evt.countword = "(" + evt.count + " decks)";
-          });
+          }
           _deckDB = $scope.FILTERDECKDB;
         }
-        angular.forEach(_deckDB, function(deck) {
-          var evt = $scope.LookupEvent(deck.EVENT);
+        for(var j=0;j<_deckDB.length;j++)
+        {
+          var deck = _deckDB[j];
+          evt = $scope.LookupEvent(deck.EVENT);
           if(evt === null || evt == 'undefined')
           {
             evt = {};
@@ -298,7 +315,7 @@ angular.module('AngularApp', [
             evt.count++;
             evt.countword = "(" + evt.count + " decks)";
           }
-        });
+        }
         $scope.Events.sort(function(a,b)
         {
           return a.count < b.count ? 1
@@ -308,31 +325,19 @@ angular.module('AngularApp', [
       };
     $scope.UpdateCharts = function()
       {
-        angular.forEach($scope.Classes,function(c){
-          c.count = 0;
-        });
-        angular.forEach($scope.FILTERDECKDB,function(d){
-          $scope.LookupClass(d.CLASS).count++;
-        });
+        for(var i=0;i<$scope.Classes.length;i++)
+          $scope.Classes[i].count = 0;
+        for(var j=0;j<$scope.FILTERDECKDB.length;j++)
+          $scope.LookupClass($scope.FILTERDECKDB[j].CLASS).count++;
         $scope.ChartByClass.data.rows = [];
-        var r;
-        var list = $scope.Classes;
-        angular.forEach(list,function(cc) {
-          r = {c: [{v: toTitleCase(cc.name)},{v: cc.count}]};
-          $scope.ChartByClass.data.rows.push(r);
-        });
+        for(var k=0;k<$scope.Classes.length;k++)
+          $scope.ChartByClass.data.rows.push({c: [{v: toTitleCase($scope.Classes[k].name)},{v: $scope.Classes[k].count}]});
         $scope.ChartByArchetype.data.rows = [];
-        list = $scope.Archetypes;
-        angular.forEach(list,function(a) {
-          r = {c: [{v: toTitleCase(a.name)},{v: a.count}]};
-          $scope.ChartByArchetype.data.rows.push(r);
-        });
+        for(var l=0;l<$scope.Archetypes.length;l++)
+          $scope.ChartByArchetype.data.rows.push({c: [{v: toTitleCase($scope.Archetypes[l].name)},{v: $scope.Archetypes[l].count}]});
         $scope.ChartByEvent.data.rows = [];
-        list = $scope.Events;
-        angular.forEach(list,function(e) {
-          r = {c: [{v: toTitleCase(e.name)},{v: e.count}]};
-          $scope.ChartByEvent.data.rows.push(r);
-        });
+        for(var m=0;m<$scope.Events.length;m++)
+          $scope.ChartByEvent.data.rows.push({c: [{v: toTitleCase($scope.Events[m].name)},{v: $scope.Events[m].count}]});
         $scope.ChartByClass.data.rows.sort(function(a,b){
           return b.c[1].v < a.c[1].v ? -1
             : b.c[1].v > a.c[1].v ? 1
@@ -353,122 +358,110 @@ angular.module('AngularApp', [
       };
     $scope.LookupClass = function(c)
       {
-        var ret = null;
-        angular.forEach($scope.Classes,function(cls){
-          if (cls.name.toLowerCase() == c.toLowerCase())
-          {
-            ret = cls;
-            return;
-          }
-        });
-        return ret;
+        for(var i=0;i<$scope.Classes.length;i++)
+        {
+          var cls = $scope.Classes[i];
+          if(cls.name.toLowerCase() == c.toLowerCase())
+            return cls;
+        }
+        return null;
       };
     $scope.LookupEvent = function(e)
       {
-        var ret = null;
-        angular.forEach($scope.Events,function(evt){
+        for(var i=0;i<$scope.Events.length;i++)
+        {
+          var evt = $scope.Events[i];
           if (evt.name.toLowerCase() == e.toLowerCase())
-          {
-            ret = evt;
-            return;
-          }
-        });
-        return ret;
+            return evt;
+        }
+        return null;
       };
     $scope.LookupArchetype = function(a)
       {
-        var ret = null;
-        angular.forEach($scope.Archetypes,function(archetype){
+        for(var i=0;i<$scope.Archetypes.length;i++)
+        {
+          var archetype = $scope.Archetypes[i];
           if (archetype.name.toLowerCase() == a.toLowerCase())
-          {
-            ret = archetype;
-            return;
-          }
-        });
-        return ret;
+            return archetype;
+        }
+        return null;
       };
     $scope.LookupCard = function(c)
       {
-        var ret = null;
-        angular.forEach($scope.Cards,function(card){
+        for(var i=0;i<$scope.Cards.length;i++)
+        {
+          var card = $scope.Cards[i];
           if (card.name.toLowerCase() == c.toLowerCase())
-          {
-            ret = card;
-            return;
-          }
-        });
-        return ret;
+            return card;
+        }
+        return null;
       };
     $scope.FilterArchetypesIncludes = function(a)
       {
-        var ret = false;
-        angular.forEach($scope.Filters.Archetypes,function(filter){
-          if (filter.name.toLowerCase() == a.toLowerCase())
-          {
-            ret = true;
-            return;
-          }
-        });
-        return ret;
+        for(var i=0;i<$scope.Filters.Archetypes.length;i++)
+          if ($scope.Filters.Archetypes[i].name.toLowerCase() == a.toLowerCase())
+            return true;
+        return false;
       };
     $scope.FilterClassesIncludes = function(c)
       {
-        var ret = false;
-        angular.forEach($scope.Filters.Classes,function(filter){
-          if (filter.name.toLowerCase() == c.toLowerCase())
-            ret = true;
-          return;
-        });
-        return ret;
+        for(var i=0;i<$scope.Filters.Classes.length;i++)
+          if ($scope.Filters.Classes[i].name.toLowerCase() == c.toLowerCase())
+            return true;
+        return false;
       };
     $scope.FilterEventsIncludes = function(e)
       {
-        var ret = false;
-        angular.forEach($scope.Filters.Events,function(filter){
-          if (filter.name.toLowerCase() == e.toLowerCase())
-            ret = true;
-            return;
-        });
-        return ret;
+        for(var i=0;i<$scope.Filters.Events.length;i++)
+          if ($scope.Filters.Events[i].name.toLowerCase() == e.toLowerCase())
+            return true;
+        return false;
       };
     $scope.FilterIncludeCardsIncludes = function(deck)
       {
         var ret = true;
         var filterincludes = false;
-        angular.forEach($scope.Filters.IncludeDecksWithCards,function(filter){
+        for(var i=0;i<$scope.Filters.IncludeDecksWithCards.length;i++)
+        {
+          var filter = $scope.Filters.IncludeDecksWithCards[i];
           filterincludes = false;
-          angular.forEach(deck.CARDLIST,function(card){
-            if (filter.name.toLowerCase() == card[1].toLowerCase() && filter.include)
-              filterincludes = true;
-              return;
-          });
-          if(!filterincludes)
+          for(var j=0;j<deck.CARDLIST.length;j++)
           {
-            ret = false;
-            return;
+            var card = deck.CARDLIST[j];
+            if (filter.name.toLowerCase() == card[1].toLowerCase() && filter.include)
+            {
+              filterincludes = true;
+              break;
+            }
           }
-        });
+          if(!filterincludes)
+            ret = false;
+        }
         return ret;
       };
     $scope.FilterExcludeCardsIncludes = function(deck)
       {
-        var ret = false;
-        angular.forEach($scope.Filters.ExcludeDecksWithCards,function(filter){
-          angular.forEach(deck.CARDLIST,function(card){
+        for(var i=0;i<$scope.Filters.ExcludeDecksWithCards.length;i++)
+        {
+          var filter = $scope.Filters.ExcludeDecksWithCards[i];
+          for(var j=0;j<deck.CARDLIST.length;j++)
+          {
+            var card = deck.CARDLIST[j];
             if (filter.name.toLowerCase() == card[1].toLowerCase() && filter.exclude)
-              ret = true;
-              return;
-          });
-        });
-        return ret;
+              return true;
+          }
+        }
+        return false;
       };
     $scope.GetCardCount = function(cards)
       {
-        var c = 0;
-        angular.forEach(cards,function(card) {
-          c = c + Math.round(card.TOTALCOUNT / card.SEENCOUNT);
-        });
-        return c;
+        var count = 0;
+        for(var i=0;i<cards.length;i++)
+        {
+          var card = cards[i];
+          count = count + Math.round(card.TOTALCOUNT / card.SEENCOUNT);
+        }
+        return count;
       };
     $scope.FilterDecks = function()
       {
@@ -487,28 +480,28 @@ angular.module('AngularApp', [
                   if($scope.Filters.ExcludeDecksWithCards.length === 0 || !$scope.FilterExcludeCardsIncludes(deck))
                     if(dt >= $scope.Filters.StartDate)
                       if(dt <= $scope.Filters.EndDate)
-                    {
-                      $scope.FILTERDECKDB.push(deck);
-                      for(var j=0;j<deck.CARDLIST.length;j++)
-                      {
-                        var card = deck.CARDLIST[j];
-                        var cardName = card[1];
-                        var cardCount = card[0];
-                        if(!$scope.DeckHelperCards.includes(cardName))
                         {
-                          $scope.DeckHelperCards.push(cardName);
-                          $scope.DeckHelperData[cardName] = {};
-                          $scope.DeckHelperData[cardName].NAME = cardName;
-                          $scope.DeckHelperData[cardName].SEENCOUNT = 1;
-                          $scope.DeckHelperData[cardName].TOTALCOUNT = cardCount;
+                          $scope.FILTERDECKDB.push(deck);
+                          for(var j=0;j<deck.CARDLIST.length;j++)
+                          {
+                            var card = deck.CARDLIST[j];
+                            var cardName = card[1];
+                            var cardCount = card[0];
+                            if(!$scope.DeckHelperCards.includes(cardName))
+                            {
+                              $scope.DeckHelperCards.push(cardName);
+                              $scope.DeckHelperData[cardName] = {};
+                              $scope.DeckHelperData[cardName].NAME = cardName;
+                              $scope.DeckHelperData[cardName].SEENCOUNT = 1;
+                              $scope.DeckHelperData[cardName].TOTALCOUNT = cardCount;
+                            }
+                            else
+                            {
+                              $scope.DeckHelperData[cardName].SEENCOUNT++;
+                              $scope.DeckHelperData[cardName].TOTALCOUNT = $scope.DeckHelperData[cardName].TOTALCOUNT + cardCount;
+                            }
+                          }
                         }
-                        else
-                        {
-                          $scope.DeckHelperData[cardName].SEENCOUNT++;
-                          $scope.DeckHelperData[cardName].TOTALCOUNT = $scope.DeckHelperData[cardName].TOTALCOUNT + cardCount;
-                        }
-                      }
-                    }
         }
         $scope.DeckHelperCards.sort(function(a,b){
           return  $scope.DeckHelperData[a].SEENCOUNT < $scope.DeckHelperData[b].SEENCOUNT ? 1
@@ -545,17 +538,21 @@ angular.module('AngularApp', [
     $scope.GetTextListFromDeckList = function(cards)
       {
         var list = "";
-        angular.forEach(cards,function(card) {
+        for(var i=0;i<cards.length;i++)
+        {
+          var card = cards[i];
           list = list + card[0] + " " + card[1] + "\n";
-        });
+        }
         return list;
       };
     $scope.GetTextListFromCardGroup = function(cards)
       {
         var list = "";
-        angular.forEach(cards,function(card) {
+        for(var i=0;i<cards.length;i++)
+        {
+          var card = cards[i];
           list = list + Math.round(card.TOTALCOUNT / card.SEENCOUNT) + " " + card.NAME + "\n";
-        });
+        }
         return list;
       };
     $scope.GetFilteredCardsBetween = function(lowPCT,highPCT)
@@ -563,31 +560,29 @@ angular.module('AngularApp', [
         var list = [];
         var deckcount = $scope.FILTERDECKDB.length;
         var seenPCT = 0;
-        var card;
-        angular.forEach($scope.DeckHelperCards,function(cardName) {
-          card = $scope.DeckHelperData[cardName];
+        for(var i=0;i<$scope.DeckHelperCards.length;i++)
+        {
+          var card = $scope.DeckHelperData[$scope.DeckHelperCards[i]];
           seenPCT = card.SEENCOUNT / deckcount * 100;
           if(seenPCT >= lowPCT && seenPCT < highPCT)
             list.push(card);
-        });
-        //alert(list.length);
+        }
         return list;
       };
     $scope.ResetFilters = function()
       {
-        angular.forEach($scope.Classes,function(c){
-          c.selected = false;
-        });
-        angular.forEach($scope.Archetypes,function(c){
-          c.selected = false;
-        });
-        angular.forEach($scope.Events,function(c){
-          c.selected = false;
-        });
-        angular.forEach($scope.Cards,function(c){
-          c.include = false;
-          c.exclude = false;
-        });
+        for(var i=0;i<$scope.Classes.length;i++)
+          $scope.Classes[i].selected = false;
+        for(var j=0;j<$scope.Archetypes.length;j++)
+          $scope.Archetypes[j].selected = false;
+        for(var k=0;k<$scope.Events.length;k++)
+          $scope.Events[k].selected = false;
+        for(var l=0;l<$scope.Cards.length;l++)
+        {
+          var card = $scope.Cards[l];
+          card.include = false;
+          card.exclude = false;
+        }
         $scope.Filters.StartDate = new Date(2016,11,01);
         $scope.Filters.EndDate = new Date();
       };

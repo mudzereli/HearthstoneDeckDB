@@ -7,10 +7,8 @@
 - Keep ALL deck lists intact and available.
 - Easy exporting to Hearthstone Deck Tracker.
 
-###To Do:
-- speed up dropdowns for card selections ($scope.LookupCard())
-
 ###Done:
+- speed up site
 - more statistics at top of deck filter panel
 - easier copy to clipboard for import to hdt
 - card counts on deck stats panels (i.e. 22 auto include cards)
