@@ -84,6 +84,9 @@ head
                     .form-group
                       label Event Filter
                       div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
+                    .form-group
+                      label Player Filter
+                      div(isteven-multi-select, input-model="Players", output-model="Filters.Players", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
                   form.col-sm-3
                     .form-group
                       label Include Decks With Cards
