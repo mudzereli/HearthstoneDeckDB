@@ -7,6 +7,10 @@
 - Keep ALL deck lists intact and available.
 - Easy exporting to Hearthstone Deck Tracker.
 
+###Todo:
+- more site speed optimizations
+- fix mobile issues (speed)
+
 ###Done:
 - speed up site
 - more statistics at top of deck filter panel
