@@ -389,15 +389,13 @@ angular.module('AngularApp', [
       };
     $scope.LookupCard = function(c)
       {
-        var ret = null;
-        angular.forEach($scope.Cards,function(card){
+        for(var i=0;i<$scope.Cards.length;i++)
+        {
+          var card = $scope.Cards[i];
           if (card.name.toLowerCase() == c.toLowerCase())
-          {
-            ret = card;
-            return;
-          }
-        });
-        return ret;
+            return card;
+        }
+        return null;
       };
     $scope.FilterArchetypesIncludes = function(a)
       {
