@@ -81,11 +81,8 @@
                         th #
                         th Card
                       tbody
-                        tr(ng-repeat="card in Application.CurrentlySelectedDeck.CARDLIST")
+                        tr(ng-repeat="card in Application.CurrentlySelectedDeck.CARDLIST", style="cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' style='width: 150px;'><div class='clearfix'></div>")
                           td(style="padding: 1px; margin: 1px;")
                             strong {{ card[0] }}
-                          td(style="padding: 1px; margin: 1px;") {{ card[1] }}
-              //- tr
-              //-   td
-              //-     strong JSON
-              //-   td {{ CurrentlySelectedDeck }}
+                          td(style="padding: 1px; margin: 1px;") 
+                            | {{ card[1] }}
