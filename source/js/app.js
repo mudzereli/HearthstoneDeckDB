@@ -190,56 +190,6 @@ angular.module('AngularApp', [
           };
       };
     $scope.PopulateAllData = function(wipeAll)
-    {
-          var _deckDB;
-          var card;
-          if(wipeAll)
-          {
-            $scope.Cards = [];
-            _deckDB = $scope.DECKDB;
-          }
-          else
-          {
-            for(var i=0;i<$scope.Cards.length;i++)
-            {
-              card = $scope.Cards[i];
-              card.count = 0;
-              card.countword = "(" + card.count + " decks)";
-            }
-            _deckDB = $scope.FILTERDECKDB;
-          }
-          for(var j=0;j<_deckDB.length;j++)
-          {
-            var deck = _deckDB[j];
-            for(var k=0;k<deck.CARDLIST.length;k++)
-            {
-              var cardflat = deck.CARDLIST[k];
-              card = $scope.LookupCard(cardflat[1]);
-              if(card === null || card == 'undefined')
-              {
-                card = {};
-                card.name = cardflat[1];
-                card.count = cardflat[0];
-                card.countword = "(" + card.count + " decks)";
-                card.include = false;
-                card.exclude = false;
-                $scope.Cards.push(card);
-              }
-              else
-              {
-                card.count++;
-                card.countword = "(" + card.count + " decks)";
-              }
-            }
-          }
-          $scope.Cards.sort(function(a,b)
-          {
-            return a.count < b.count ? 1
-              : a.count > b.count ? -1
-              : 0;
-          });
-    };
-    $scope.PopulateAllData = function(wipeAll)
       {
         var _deckDB;
         var card;
