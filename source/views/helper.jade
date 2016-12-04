@@ -81,7 +81,7 @@
                   th Card
                   th Seen%
                 tbody
-                  tr(ng-repeat="card in Tier4Cards | limitTo: 30", style="cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card.NAME) }}' style='height: 280px;'><div class='clearfix'></div>")
+                  tr(ng-repeat="card in Tier4Cards | limitTo: 30", style="cursor: help;", tooltip-placement="top", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card.NAME) }}' style='height: 280px;'><div class='clearfix'></div>")
                     td 
                       strong {{ card.TOTALCOUNT / card.SEENCOUNT | number: 1 }}
                     td
