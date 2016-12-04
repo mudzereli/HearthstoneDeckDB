@@ -8,10 +8,11 @@
 - Easy exporting to Hearthstone Deck Tracker.
 
 ###Todo:
-- more site speed optimizations
-- fix mobile issues (speed)
+-  pick class > archetype instead of both
+-  fix lists on mobile devices
 
 ###Done:
+- card info on mouseover
 - speed up site
 - more statistics at top of deck filter panel
 - easier copy to clipboard for import to hdt

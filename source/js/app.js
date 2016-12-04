@@ -89,8 +89,8 @@ angular.module('AngularApp', [
 }])
 /* Main Application Controller */
 .controller('AppController', ['$scope','localStorageService', function($scope,localStorageService){
-    $scope.BaseURL = '';
     $scope.BaseURL = '/HearthstoneDeckDB';
+    $scope.BaseURL = '';
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
@@ -664,6 +664,16 @@ angular.module('AngularApp', [
         $scope.Application.CurrentlySelectedDeckIndex = 0;
         $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
       };
+    $scope.GetCardImage = function(name)
+    {
+      for(var i=0;i<CARDDB.length;i++)
+      {
+        var card = CARDDB[i];
+        if(card.name.toLowerCase() === name.toLowerCase())
+          return "http://media.services.zam.com/v1/media/byName/hs/cards/enus/" + card.id + ".png";
+      }
+      return "Card Image Not Found!";
+    };
     $scope.PopulateDeckArchetypes(true);
     $scope.PopulateEvents(true);
     $scope.PopulatePlayers(true);
