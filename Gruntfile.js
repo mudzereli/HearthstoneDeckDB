@@ -24,10 +24,10 @@ module.exports = function(grunt) {
         src: [ 'build' ]
       },
       stylesheets: {
-        src: [ 'build/**/*.css', 'build/css/**', '!build/stylesheet.min.css', '!build/bootstrap-3.3.4-dist/**', '!build/ngclipboard-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
+        src: [ 'build/**/*.css', 'build/css/**', '!build/stylesheet.min.css', '!build/bootstrap-3.3.4-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
       },
       scripts: {
-        src: [ 'build/**/*.js', 'build/js/**', '!build/javascript.min.js', '!build/bootstrap-3.3.4-dist/**', '!build/ngclipboard-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
+        src: [ 'build/**/*.js', 'build/js/**', '!build/javascript.min.js', '!build/bootstrap-3.3.4-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
       }
     },
 
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
     cssmin: {
       build: {
         files: {
-          'build/stylesheet.min.css': [ 'build/**/*.css', '!build/bootstrap-3.3.4-dist/**', '!build/ngclipboard-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
+          'build/stylesheet.min.css': [ 'build/**/*.css', '!build/bootstrap-3.3.4-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
         }
       }
     },
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
           mangle: false
         },
         files: {
-          'build/javascript.min.js': ['source/js/decks.js', 'source/js/main.js', 'source/js/app.js', '!build/bootstrap-3.3.4-dist/**', '!build/ngclipboard-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
+          'build/javascript.min.js': ['source/js/decks.js', 'source/js/main.js', 'source/js/app.js', '!build/bootstrap-3.3.4-dist/**', '!build/hearthstonejson-dist/**', '!build/deckdb-dist/**' ]
         }
       }
     },
