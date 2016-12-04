@@ -9,6 +9,10 @@
 
 ###Todo:
 -  updates for mobile performance
+    +  populate all dropdowns at once after refreshing (so only iterating through deck lists once)
+    +  fix frame sizes on things like inputs for medium size devices
+- add rarity gem to card lists and color card background according to class
+- add "copy deck to clipboard" button to dashboard deck list
 
 ###Done:
 - card info on mouseover
