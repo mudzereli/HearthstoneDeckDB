@@ -89,8 +89,8 @@ angular.module('AngularApp', [
 }])
 /* Main Application Controller */
 .controller('AppController', ['$scope','localStorageService', function($scope,localStorageService){
-    $scope.BaseURL = '/HearthstoneDeckDB';
     $scope.BaseURL = '';
+    $scope.BaseURL = '/HearthstoneDeckDB';
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
