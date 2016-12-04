@@ -48,6 +48,7 @@
           span.glyphicon.glyphicon-triangle-left(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex > 0", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex-1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
           | &nbsp;&nbsp;
           span.glyphicon.glyphicon-triangle-right(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex < (FILTERDECKDB.length-1)", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex+1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
+          //span.glyphicon.glyphicon-triangle-right(style="cursor: not-allowed;", ng-if="Application.CurrentlySelectedDeckIndex >= (FILTERDECKDB.length-1)")
           | &nbsp;&nbsp;
           | {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yyyy' }}
       .panel-body(style="font-size: 0.8em;")
