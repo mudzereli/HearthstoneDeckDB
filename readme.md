@@ -8,8 +8,7 @@
 - Easy exporting to Hearthstone Deck Tracker.
 
 ###Todo:
--  pick class > archetype instead of both
--  fix lists on mobile devices
+-  updates for mobile performance
 
 ###Done:
 - card info on mouseover
