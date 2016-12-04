@@ -26,7 +26,7 @@
                   tr(ng-repeat="card in deck.CARDLIST")
                     td(style="padding: 1px; margin: 1px;")
                       strong {{ card[0] }}
-                    td(style="padding: 1px; margin: 1px; cursor: help;", tooltip-placement="top-left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' style='width: 150px;'><div class='clearfix'></div>")
+                    td(style="padding: 1px; margin: 1px; cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' style='width: 150px;'><div class='clearfix'></div>")
                       | {{ card[1] }}
               button.btn.btn-success(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(deck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
                 | Copy Card List to Clipboard 

@@ -19,4 +19,3 @@
 
 ###Later:
 - add game-changing dates to datepicker (patches/set releases/etc)
-- card pics / class colors
