@@ -8,7 +8,7 @@
 - Easy exporting to Hearthstone Deck Tracker.
 
 ###Todo:
-- add rarity gem to card lists and color card background according to class
+- more optimizations and ui tweaks
 
 ###Done:
 -  updates for mobile performance

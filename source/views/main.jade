@@ -80,16 +80,19 @@
                   strong Deck
                 td
                   .table-responsive
-                    table.table.table-striped.table-condensed(style="font-size: 0.8em;")
+                    table.table.table-hover.table-condensed(style="font-size: 0.8em;")
                       thead
                         th #
                         th Card
                       tbody
-                        tr(ng-repeat="card in Application.CurrentlySelectedDeck.CARDLIST", style="cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' width='150px' height='227px'><div class='clearfix'></div>")
-                          td(style="padding: 1px; margin: 1px;")
+                        tr(ng-init="Application.CurrentlySelectedDeck.TempCardInfo[$index] = GetCardDBInfo(card[1]);", ng-repeat="card in Application.CurrentlySelectedDeck.CARDLIST", style="cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' width='150px' height='227px'><div class='clearfix'></div>")
+                          td.slim-row
                             strong {{ card[0] }}
-                          td(style="padding: 1px; margin: 1px;") 
-                            | {{ card[1] }}
+                          td.slim-row
+                            span(class="fg-{{ Application.CurrentlySelectedDeck.TempCardInfo[$index].playerClass }}") 
+                              i.fa.fa-circle-o(class="fg-{{ Application.CurrentlySelectedDeck.TempCardInfo[$index].rarity }}")
+                              &nbsp;
+                              | {{ card[1] }}
         button.btn.btn-block.btn-success.hidden-xs(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(Application.CurrentlySelectedDeck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
           | Copy Deck to Clipboard 
           span.glyphicon.glyphicon-copy
