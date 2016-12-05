@@ -13,7 +13,7 @@
             .panel.panel-success
                 .panel-heading
                   | Key Cards 
-                  small ({{ GetCardCount(Tier1Cards) }} cards) 
+                  small.pull-right ({{ GetCardCount(Tier1Cards) }} cards) 
                 table.table.table-striped.table-condensed(style="font-size: 0.8em;")
                   thead
                     th Avg#
@@ -31,7 +31,7 @@
               .panel.panel-info
                 .panel-heading
                   | Good Cards 
-                  small ({{ GetCardCount(Tier2Cards) }} cards) 
+                  small.pull-right ({{ GetCardCount(Tier2Cards) }} cards) 
                 table.table.table-striped.table-condensed(style="font-size: 0.8em;")
                   thead
                     th Avg#
@@ -56,7 +56,7 @@
             .panel.panel-warning
               .panel-heading
                 | Tech Cards 
-                small ({{ GetCardCount(Tier3Cards) }} cards) 
+                small.pull-right ({{ GetCardCount(Tier3Cards) }} cards) 
               table.table.table-striped.table-condensed(style="font-size: 0.8em;")
                 thead
                   th Avg#
@@ -74,7 +74,7 @@
             .panel.panel-danger
               .panel-heading
                 | Other Cards 
-                small ({{ GetCardCount(Tier4Cards) }} cards) 
+                small.pull-right ({{ GetCardCount(Tier4Cards) }} cards) 
               table.table.table-striped.table-condensed(style="font-size: 0.8em;")
                 thead
                   th Avg#

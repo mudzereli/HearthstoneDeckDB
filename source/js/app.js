@@ -365,21 +365,16 @@ angular.module('AngularApp', [
         for(var m=0;m<$scope.Events.length;m++)
           if($scope.Events[m].count > 0)
             $scope.ChartByEvent.data.rows.push({c: [{v: toTitleCase($scope.Events[m].name)},{v: $scope.Events[m].count}]});
-        $scope.ChartByClass.options.slices =
-        {
-          0: { color: $scope.LookupClass($scope.ChartByClass.data.rows[0].c[0].v.toLowerCase()).color },
-          1: { color: $scope.LookupClass($scope.ChartByClass.data.rows[1].c[0].v.toLowerCase()).color },
-          2: { color: $scope.LookupClass($scope.ChartByClass.data.rows[2].c[0].v.toLowerCase()).color },
-          3: { color: $scope.LookupClass($scope.ChartByClass.data.rows[3].c[0].v.toLowerCase()).color },
-          4: { color: $scope.LookupClass($scope.ChartByClass.data.rows[4].c[0].v.toLowerCase()).color },
-          5: { color: $scope.LookupClass($scope.ChartByClass.data.rows[5].c[0].v.toLowerCase()).color },
-          6: { color: $scope.LookupClass($scope.ChartByClass.data.rows[6].c[0].v.toLowerCase()).color },
-          7: { color: $scope.LookupClass($scope.ChartByClass.data.rows[7].c[0].v.toLowerCase()).color },
-          8: { color: $scope.LookupClass($scope.ChartByClass.data.rows[8].c[0].v.toLowerCase()).color }
-        };
         $scope.ChartByClass.options.title = 'Filtered Decks by Class (' + $scope.FILTERDECKDB.length + " decks)";
         $scope.ChartByArchetype.options.title = 'Filtered Decks by Type (' + $scope.ChartByArchetype.data.rows.length + " types)";
         $scope.ChartByEvent.options.title = 'Filtered Decks by Event (' + $scope.ChartByEvent.data.rows.length + " events)";
+        $scope.ChartByClass.options.slices = {};
+        for(var n=0;n<$scope.ChartByClass.data.rows.length;n++)
+        {
+          var slice = {};
+          slice.color = $scope.LookupClass($scope.ChartByClass.data.rows[n].c[0].v.toLowerCase()).color;
+          $scope.ChartByClass.options.slices[n] = slice;
+        }
       };
     $scope.LookupClass = function(c)
       {
