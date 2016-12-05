@@ -2,14 +2,14 @@
   .col-sm-6
     .panel.panel-primary
       .panel-heading
-        | Main Cards To Consider
+        | Main Cards to Consider
         .pull-right
           button.btn.btn-sm.btn-success(ngclipboard, data-clipboard-text="{{GetTextListFromCardGroup(CopyClipboardCards)}}", tooltip="Copy these cards to the Clipboard")
             span.glyphicon.glyphicon-copy
         .clearfix
       .panel-body
         .row
-          .col-sm-6
+          .col-md-6
             .panel.panel-success
                 .panel-heading
                   | Key Cards 
@@ -27,7 +27,7 @@
                         strong
                           | {{ card.NAME }}
                       td {{ card.SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%
-          .col-sm-6
+          .col-md-6
               .panel.panel-info
                 .panel-heading
                   | Good Cards 
@@ -49,10 +49,10 @@
   .col-sm-6
     .panel.panel-default
       .panel-heading
-        | Other Cards To Consider
+        | Other Cards to Consider
       .panel-body
         .row
-          .col-sm-6
+          .col-md-6
             .panel.panel-warning
               .panel-heading
                 | Tech Cards 
@@ -70,7 +70,7 @@
                       strong
                         | {{ card.NAME }}
                       td {{ card.SEENCOUNT / FILTERDECKDB.length * 100 | number: 1 }}%
-          .col-sm-6
+          .col-md-6
             .panel.panel-danger
               .panel-heading
                 | Other Cards 
