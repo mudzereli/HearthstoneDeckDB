@@ -93,6 +93,6 @@
                               i.fa.fa-circle-o(class="fg-{{ Application.CurrentlySelectedDeck.TempCardInfo[$index].rarity }}")
                               &nbsp;
                               | {{ card[1] }}
-        button.btn.btn-block.btn-success.hidden-xs(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(Application.CurrentlySelectedDeck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
+        button.btn.btn-block.btn-success.hidden-xs(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(Application.CurrentlySelectedDeck.CARDLIST)}}")
           | Copy Deck to Clipboard 
           span.glyphicon.glyphicon-copy
