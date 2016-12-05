@@ -49,7 +49,7 @@
           | &nbsp;&nbsp;
           span.glyphicon.glyphicon-triangle-right(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex < (FILTERDECKDB.length-1)", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex+1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
           | &nbsp;&nbsp;
-          | {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yyyy' }}
+          small {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yy' }}
       .panel-body(style="font-size: 0.8em;")
         .table-responsive
           table.table.table-striped.table-condensed.table-headerless
@@ -86,5 +86,5 @@
                           td(style="padding: 1px; margin: 1px;") 
                             | {{ card[1] }}
         button.btn.btn-block.btn-success.hidden-xs(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(Application.CurrentlySelectedDeck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
-          | Copy Deck List to Clipboard 
+          | Copy Deck to Clipboard 
           span.glyphicon.glyphicon-copy

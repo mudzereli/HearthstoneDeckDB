@@ -45,18 +45,20 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
               .panel-body(ng-if="Filters.Showing")
                 .row
                   .col-sm-3
-                      label Cutoff Start Date
-                      p.input-group
-                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
-                        span.input-group-btn
-                          button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
-                            span.glyphicon.glyphicon-calendar
-                      label Cutoff End Date
-                      p.input-group
-                        input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
-                        span.input-group-btn
-                          button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
-                            span.glyphicon.glyphicon-calendar
+                      .form-group
+                        label Cutoff Start Date
+                        .input-group
+                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
+                          span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
+                              span.glyphicon.glyphicon-calendar
+                      .form-group
+                        label Cutoff End Date
+                        .input-group
+                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
+                          span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
+                              span.glyphicon.glyphicon-calendar
                   form.col-sm-3
                     .form-group
                       label Class Filter
@@ -73,10 +75,10 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
                       div(isteven-multi-select, input-model="Players", output-model="Filters.Players", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
                   form.col-sm-3
                     .form-group
-                      label Include Decks With Cards
+                      label Include Cards
                       div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include")
                     .form-group
-                      label Exclude Decks With Cards
+                      label Exclude Cards
                       div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude")
         div(ng-view='')
       .push
