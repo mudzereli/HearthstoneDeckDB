@@ -10,6 +10,7 @@
 ###Todo:
 - more optimizations and ui tweaks
 - check class filter when archetype is picked and vice-versa
+- speed up "decks" tab for mobile devices
 
 ###Done:
 -  updates for mobile performance
