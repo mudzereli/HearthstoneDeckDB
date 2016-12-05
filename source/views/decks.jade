@@ -9,25 +9,47 @@
             div(accordion-group, is-open="decklist.open", ng-repeat="deck in FILTERDECKDB | limitTo: 50 track by $index", class="panel-default")
               div(accordion-heading)
                 .row(class="fg-{{ deck.CLASS }}", style="font-size: 0.9em;")
-                  .col-sm-1
+                  .col-xs-1
                     img(src="{{ BaseURL }}/assets/Icon_{{ deck.CLASS | titleCase }}_64.png", height="26px;", style="margin-top: -10px; margin-bottom: -10px;")
-                  .col-sm-1 {{ deck.DATE | date:"MM/dd" }} 
-                  .col-sm-3 {{ deck.ARCHETYPE | titleCase }} 
-                  .col-sm-2 {{ deck.PLAYER | titleCase }} 
-                  .col-sm-4 {{ deck.EVENT | titleCase }} 
-                  .col-sm-1 
-                    .pull-right
-                      span.glyphicon(ng-class="{'glyphicon-chevron-down': decklist.open, 'glyphicon-chevron-right': !decklist.open}")
-              table.table.table-striped.table-condensed(style="font-size: 0.7em;")
-                thead
-                  th #
-                  th Card
-                tbody
-                  tr(ng-repeat="card in deck.CARDLIST")
-                    td(style="padding: 1px; margin: 1px;")
-                      strong {{ card[0] }}
-                    td(style="padding: 1px; margin: 1px; cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' width='150px' height='227px'><div class='clearfix'></div>")
-                      | {{ card[1] }}
+                  .col-sm-1.hidden-xs {{ deck.DATE | date:"MM/dd" }} 
+                  .col-sm-3.col-xs-9 {{ deck.ARCHETYPE | titleCase }} 
+                  .col-sm-2.hidden-xs {{ deck.PLAYER | titleCase }} 
+                  .col-sm-4.hidden-xs {{ deck.EVENT | titleCase }} 
+                  .col-xs-1 
+                    span.glyphicon(ng-class="{'glyphicon-chevron-down': decklist.open, 'glyphicon-chevron-right': !decklist.open}")
+              .table-responsive
+                table.table.table-striped.table-condensed.table-headerless
+                  tbody
+                    tr
+                      td
+                        strong Player
+                      td {{ Application.CurrentlySelectedDeck.PLAYER | titleCase }}
+                    tr
+                      td
+                        strong Archetype
+                      td(class="fg-{{ Application.CurrentlySelectedDeck.CLASS }}") {{ Application.CurrentlySelectedDeck.ARCHETYPE | titleCase }}
+                    tr
+                      td
+                        strong Event
+                      td {{ Application.CurrentlySelectedDeck.EVENT | titleCase }}
+                    tr
+                      td
+                        strong Date
+                      td {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yyyy' }}
+                    tr
+                      td
+                        strong Deck
+                      td
+                        table.table.table-striped.table-condensed(style="font-size: 0.7em;")
+                          thead
+                            th #
+                            th Card
+                          tbody
+                            tr(ng-repeat="card in deck.CARDLIST")
+                              td(style="padding: 1px; margin: 1px;")
+                                strong {{ card[0] }}
+                              td(style="padding: 1px; margin: 1px; cursor: help;", tooltip-placement="left", tooltip-append-to-body="true", tooltip-html-unsafe="<img src='{{ GetCardImage(card[1]) }}' width='150px' height='227px'><div class='clearfix'></div>")
+                                | {{ card[1] }}
               button.btn.btn-success(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(deck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
                 | Copy Card List to Clipboard 
                 span.glyphicon.glyphicon-copy

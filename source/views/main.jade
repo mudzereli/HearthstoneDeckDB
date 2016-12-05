@@ -2,8 +2,8 @@
   .col-sm-8
     .panel.panel-success
       .panel-heading
-        | Filtered Deck Statistics
-        .pull-right {{ Filters.StartDate | date:"MM/dd/yyyy" }} - {{ Filters.EndDate | date:"MM/dd/yyyy" }}
+        | Deck Statistics
+        small.pull-right {{ Filters.StartDate | date:"MM/dd/yy" }} - {{ Filters.EndDate | date:"MM/dd/yy" }}
       .panel-body
         .row
           .col-sm-6
@@ -43,12 +43,11 @@
   .col-sm-4
     .panel.panel-default
       .panel-heading.unselectable(class="bg-{{ Application.CurrentlySelectedDeck.CLASS }}")
-        | Last Deck [{{ Application.CurrentlySelectedDeckIndex+1 }}/{{ FILTERDECKDB.length }}]
+        | Decks [{{ Application.CurrentlySelectedDeckIndex+1 }}/{{ FILTERDECKDB.length }}]
         .pull-right 
           span.glyphicon.glyphicon-triangle-left(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex > 0", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex-1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
           | &nbsp;&nbsp;
           span.glyphicon.glyphicon-triangle-right(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex < (FILTERDECKDB.length-1)", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex+1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
-          //span.glyphicon.glyphicon-triangle-right(style="cursor: not-allowed;", ng-if="Application.CurrentlySelectedDeckIndex >= (FILTERDECKDB.length-1)")
           | &nbsp;&nbsp;
           | {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yyyy' }}
       .panel-body(style="font-size: 0.8em;")
@@ -86,3 +85,6 @@
                             strong {{ card[0] }}
                           td(style="padding: 1px; margin: 1px;") 
                             | {{ card[1] }}
+        button.btn.btn-block.btn-success.hidden-xs(ngclipboard data-clipboard-text="{{GetTextListFromDeckList(Application.CurrentlySelectedDeck.CARDLIST)}}", tooltip="Copy cards to clipboard.")
+          | Copy Deck List to Clipboard 
+          span.glyphicon.glyphicon-copy
