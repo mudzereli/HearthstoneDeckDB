@@ -9,6 +9,7 @@
 
 ###Todo:
 - more optimizations and ui tweaks
+- check class filter when archetype is picked and vice-versa
 
 ###Done:
 -  updates for mobile performance
