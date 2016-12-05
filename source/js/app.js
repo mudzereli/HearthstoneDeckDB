@@ -94,8 +94,8 @@ angular.module('AngularApp', [
 }])
 /* Main Application Controller */
 .controller('AppController', ['$scope','localStorageService', function($scope,localStorageService){
-    $scope.BaseURL = '';
     $scope.BaseURL = '/HearthstoneDeckDB';
+    $scope.BaseURL = '';
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
@@ -355,7 +355,8 @@ angular.module('AngularApp', [
       {
         $scope.ChartByClass.data.rows = [];
         for(var k=0;k<$scope.Classes.length;k++)
-          $scope.ChartByClass.data.rows.push({c: [{v: toTitleCase($scope.Classes[k].name)},{v: $scope.Classes[k].count}]});
+          if($scope.Classes[k].count > 0)
+            $scope.ChartByClass.data.rows.push({c: [{v: toTitleCase($scope.Classes[k].name)},{v: $scope.Classes[k].count}]});
         $scope.ChartByArchetype.data.rows = [];
         for(var l=0;l<$scope.Archetypes.length;l++)
           if($scope.Archetypes[l].count > 0)
@@ -619,7 +620,7 @@ angular.module('AngularApp', [
           $scope.Archetypes[j].selected = false;
         for(var k=0;k<$scope.Events.length;k++)
           $scope.Events[k].selected = false;
-        for(var m=0;m<$scope.Events.length;m++)
+        for(var m=0;m<$scope.Players.length;m++)
           $scope.Players[m].selected = false;
         for(var l=0;l<$scope.Cards.length;l++)
         {
@@ -629,6 +630,12 @@ angular.module('AngularApp', [
         }
         $scope.Filters.StartDate = new Date(2016,11,01);
         $scope.Filters.EndDate = new Date();
+        $scope.Filters.Classes = [];
+        $scope.Filters.Archetypes = [];
+        $scope.Filters.Events = [];
+        $scope.Filters.Players = [];
+        $scope.Filters.Cards = [];
+        $scope.Calculate();
       };
     $scope.Calculate = function()
       {

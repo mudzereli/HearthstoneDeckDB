@@ -31,55 +31,62 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
       .container
         .row
           .col-sm-12
-            .panel.panel-info
-              .panel-heading
-                span(style="font-size: 1.5em;") Deck Filters 
-                small.hidden-xs ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
-                .pull-right
-                  button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
-                  &nbsp;
-                  button.btn.btn-sm.btn-danger.span.glyphicon.glyphicon-refresh(tooltip="Reset All Filters", ng-click="ResetFilters();")
-                  &nbsp;
-                  button.btn.btn-sm.btn-success.span.glyphicon.glyphicon-filter(tooltip="Apply Filter Settings", ng-click="Calculate();")
-                .clearfix
-              .panel-body(ng-if="Filters.Showing")
+            div(accordion, close-others="true")
+              div(accordion-group, is-open="Filters.Showing", class="panel-info")
+                div(accordion-heading)
+                  .container-fluid
+                    | Deck Filters 
+                    span.glyphicon.pull-right(ng-class="{'glyphicon-chevron-down': Filters.Showing, 'glyphicon-chevron-right': !Filters.Showing}")
+                  //- small.hidden-xs ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
+                  //- .pull-right
+                  //-   button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
+                  //-   &nbsp;
+                  //-   button.btn.btn-sm.btn-danger.span.glyphicon.glyphicon-refresh(tooltip="Reset All Filters", ng-click="ResetFilters();")
+                  //-   &nbsp;
+                  //-   button.btn.btn-sm.btn-success.span.glyphicon.glyphicon-filter(tooltip="Apply Filter Settings", ng-click="Calculate();")
+                  //- .clearfix
                 .row
                   .col-sm-3
                       .form-group
                         label Cutoff Start Date
                         .input-group
-                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened")
+                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.StartDate", is-open="StartDatePicker.opened", ng-change="Calculate();")
                           span.input-group-btn
                             button.btn.btn-default(type="button", ng-click="OpenStartDatePicker($event)")
                               span.glyphicon.glyphicon-calendar
                       .form-group
                         label Cutoff End Date
                         .input-group
-                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened")
+                          input.form-control(datepicker-popup="", type="text", ng-model="Filters.EndDate", is-open="EndDatePicker.opened", ng-change="Calculate();")
                           span.input-group-btn
                             button.btn.btn-default(type="button", ng-click="OpenEndDatePicker($event)")
                               span.glyphicon.glyphicon-calendar
                   form.col-sm-3
                     .form-group
                       label Class Filter
-                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name countword", tick-property="selected", helper-elements="all none reset")
+                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name countword", tick-property="selected", helper-elements="all none reset", on-close="Calculate();")
                     .form-group
                       label Archetype Filter
-                      div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected")
+                      div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected", on-close="Calculate();")
                   form.col-sm-3
                     .form-group
                       label Event Filter
-                      div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
+                      div(isteven-multi-select, input-model="Events", output-model="Filters.Events", max-labels="3", button-label="name", item-label="name countword", tick-property="selected", on-close="Calculate();")
                     .form-group
                       label Player Filter
-                      div(isteven-multi-select, input-model="Players", output-model="Filters.Players", max-labels="3", button-label="name", item-label="name countword", tick-property="selected")
+                      div(isteven-multi-select, input-model="Players", output-model="Filters.Players", max-labels="3", button-label="name", item-label="name countword", tick-property="selected", on-close="Calculate();")
                   form.col-sm-3
                     .form-group
                       label Include Cards
-                      div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include")
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.IncludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="include", on-close="Calculate();")
                     .form-group
                       label Exclude Cards
-                      div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude")
+                      div(isteven-multi-select, input-model="Cards", output-model="Filters.ExcludeDecksWithCards", max-labels="3", button-label="name", item-label="name countword", tick-property="exclude", on-close="Calculate();")
+                .row
+                  .col-sm-12
+                    button.btn.btn-sm.btn-warning(ng-click="ResetFilters();")
+                      | Clear All Filters 
+                      span.glyphicon.glyphicon-refresh
         div(ng-view='')
       .push
     // Footer

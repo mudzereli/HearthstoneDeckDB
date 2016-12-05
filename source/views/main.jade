@@ -38,6 +38,10 @@
                       td(class="fg-{{ ChartByArchetype.data.rows[0].c[0].v.toUpperCase() }}") {{ ChartByArchetype.data.rows[0].c[0].v }}
                     tr
                       td
+                        strong Least Played Archetype
+                      td(class="fg-{{ ChartByArchetype.data.rows[ChartByArchetype.data.rows.length-1].c[0].v.toUpperCase() }}") {{ ChartByArchetype.data.rows[ChartByArchetype.data.rows.length-1].c[0].v }}
+                    tr
+                      td
                         strong Most Played Event
                       td(class="fg-{{ ChartByEvent.data.rows[0].c[0].v.toUpperCase() }}") {{ ChartByEvent.data.rows[0].c[0].v }}
   .col-sm-4
@@ -48,6 +52,7 @@
           span.glyphicon.glyphicon-triangle-left(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex > 0", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex-1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
           | &nbsp;&nbsp;
           span.glyphicon.glyphicon-triangle-right(style="cursor: pointer;", ng-if="Application.CurrentlySelectedDeckIndex < (FILTERDECKDB.length-1)", ng-click="Application.CurrentlySelectedDeckIndex=Application.CurrentlySelectedDeckIndex+1; SelectDeck(Application.CurrentlySelectedDeckIndex);")
+          span.glyphicon.glyphicon-triangle-right(class="fgl-{{ Application.CurrentlySelectedDeck.CLASS }}", ng-if="Application.CurrentlySelectedDeckIndex >= (FILTERDECKDB.length-1)")
           | &nbsp;&nbsp;
           small {{ Application.CurrentlySelectedDeck.DATE | date:'MM/dd/yy' }}
       .panel-body(style="font-size: 0.8em;")
