@@ -358,15 +358,12 @@ angular.module('AngularApp', [
           $scope.ChartByClass.data.rows.push({c: [{v: toTitleCase($scope.Classes[k].name)},{v: $scope.Classes[k].count}]});
         $scope.ChartByArchetype.data.rows = [];
         for(var l=0;l<$scope.Archetypes.length;l++)
-          $scope.ChartByArchetype.data.rows.push({c: [{v: toTitleCase($scope.Archetypes[l].name)},{v: $scope.Archetypes[l].count}]});
+          if($scope.Archetypes[l].count > 0)
+            $scope.ChartByArchetype.data.rows.push({c: [{v: toTitleCase($scope.Archetypes[l].name)},{v: $scope.Archetypes[l].count}]});
         $scope.ChartByEvent.data.rows = [];
         for(var m=0;m<$scope.Events.length;m++)
-          $scope.ChartByEvent.data.rows.push({c: [{v: toTitleCase($scope.Events[m].name)},{v: $scope.Events[m].count}]});
-        $scope.ChartByClass.data.rows.sort(function(a,b){
-          return b.c[1].v < a.c[1].v ? -1
-            : b.c[1].v > a.c[1].v ? 1
-            : 0;
-        });
+          if($scope.Events[m].count > 0)
+            $scope.ChartByEvent.data.rows.push({c: [{v: toTitleCase($scope.Events[m].name)},{v: $scope.Events[m].count}]});
         $scope.ChartByClass.options.slices =
         {
           0: { color: $scope.LookupClass($scope.ChartByClass.data.rows[0].c[0].v.toLowerCase()).color },
@@ -379,6 +376,9 @@ angular.module('AngularApp', [
           7: { color: $scope.LookupClass($scope.ChartByClass.data.rows[7].c[0].v.toLowerCase()).color },
           8: { color: $scope.LookupClass($scope.ChartByClass.data.rows[8].c[0].v.toLowerCase()).color }
         };
+        $scope.ChartByClass.options.title = 'Filtered Decks by Class (' + $scope.FILTERDECKDB.length + " decks)";
+        $scope.ChartByArchetype.options.title = 'Filtered Decks by Type (' + $scope.ChartByArchetype.data.rows.length + " types)";
+        $scope.ChartByEvent.options.title = 'Filtered Decks by Event (' + $scope.ChartByEvent.data.rows.length + " events)";
       };
     $scope.LookupClass = function(c)
       {

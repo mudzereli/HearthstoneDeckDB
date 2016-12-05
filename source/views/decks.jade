@@ -5,7 +5,7 @@
         | Filtered Deck Lists
       .panel-body
         .table-responsive
-          div(accordion, close-others="oneAtATime")
+          div(accordion, close-others="true")
             div(accordion-group, is-open="decklist.open", ng-repeat="deck in FILTERDECKDB | limitTo: 50 track by $index", class="panel-default")
               div(accordion-heading)
                 .row(class="fg-{{ deck.CLASS }}", style="font-size: 0.9em;")
