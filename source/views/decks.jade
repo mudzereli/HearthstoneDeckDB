@@ -12,7 +12,9 @@
                   .col-xs-1
                     img(src="{{ BaseURL }}/assets/Icon_{{ deck.CLASS | titleCase }}_64.png", height="26px;", style="margin-top: -10px; margin-bottom: -10px;")
                   .col-sm-1.hidden-xs {{ deck.DATE | date:"MM/dd" }} 
-                  .col-sm-3.col-xs-9 {{ deck.ARCHETYPE | titleCase }} 
+                  .col-sm-3.col-xs-9 
+                    | {{ deck.ARCHETYPE | titleCase }} 
+                    small ({{ deck.PLAYER | titleCase }})
                   .col-sm-2.hidden-xs {{ deck.PLAYER | titleCase }} 
                   .col-sm-4.hidden-xs {{ deck.EVENT | titleCase }} 
                   .col-xs-1 
