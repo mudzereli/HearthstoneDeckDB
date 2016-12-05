@@ -640,15 +640,9 @@ angular.module('AngularApp', [
         $scope.Application.CurrentlySelectedDeckIndex = 0;
         $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
       };
-    $scope.GetCardImage = function(name)
+    $scope.GetCardImage = function(card)
     {
-      for(var i=0;i<CARDDB.length;i++)
-      {
-        var card = CARDDB[i];
-        if(card.name.toLowerCase() === name.toLowerCase())
-          return "http://media.services.zam.com/v1/media/byName/hs/cards/enus/" + card.id + ".png";
-      }
-      return "Card Image Not Found!";
+      return "http://media.services.zam.com/v1/media/byName/hs/cards/enus/" + card.id + ".png";
     };
     $scope.GetCardDBInfo = function(name)
     {
