@@ -34,7 +34,7 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
             .panel.panel-info
               .panel-heading
                 span(style="font-size: 1.5em;") Deck Filters 
-                small ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
+                small.hidden-xs ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
                 .pull-right
                   button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
                   &nbsp;
@@ -60,7 +60,7 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
                   form.col-sm-3
                     .form-group
                       label Class Filter
-                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name", tick-property="selected")
+                      div(isteven-multi-select, input-model="Classes", output-model="Filters.Classes", button-label="icon", item-label="icon name countword", tick-property="selected", helper-elements="all none reset")
                     .form-group
                       label Archetype Filter
                       div(isteven-multi-select, input-model="Archetypes", output-model="Filters.Archetypes", max-labels="3", button-label="name", item-label="icon name countword", tick-property="selected")
@@ -102,4 +102,3 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
   script(type='text/javascript', src='hearthstonejson-dist/carddb.js')
   script(type='text/javascript', src='deckdb-dist/deckdb.js')
   script(type='text/javascript', src='javascript.min.js')
-  // Grunt Generated Javascript

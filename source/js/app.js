@@ -94,8 +94,8 @@ angular.module('AngularApp', [
 }])
 /* Main Application Controller */
 .controller('AppController', ['$scope','localStorageService', function($scope,localStorageService){
-    $scope.BaseURL = '';
     $scope.BaseURL = '/HearthstoneDeckDB';
+    $scope.BaseURL = '';
     $scope.Application =
       {
           Name: 'Hearthstone Deck DB',
@@ -116,15 +116,15 @@ angular.module('AngularApp', [
       };
     $scope.Classes =
       [
-        { name: "Mage"   , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Mage_64.png'>"   , count: 0, color: "#69CCF0", selected: false },
-        { name: "Priest" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Priest_64.png'>" , count: 0, color: "#F0F0F0", selected: false },
-        { name: "Warlock", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Warlock_64.png'>", count: 0, color: "#9482C9", selected: false },
-        { name: "Shaman" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Shaman_64.png'>" , count: 0, color: "#0070DE", selected: false },
-        { name: "Warrior", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Warrior_64.png'>", count: 0, color: "#C79C6E", selected: false },
-        { name: "Druid"  , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Druid_64.png'>"  , count: 0, color: "#FF7D0A", selected: false },
-        { name: "Rogue"  , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Rogue_64.png'>"  , count: 0, color: "#FFF569", selected: false },
-        { name: "Hunter" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Hunter_64.png'>" , count: 0, color: "#ABD473", selected: false },
-        { name: "Paladin", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Paladin_64.png'>", count: 0, color: "#F58CBA", selected: false }
+        { name: "Mage"   , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Mage_64.png'>"   , count: 0, countword:"(0 decks)", color: "#69CCF0", selected: false },
+        { name: "Priest" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Priest_64.png'>" , count: 0, countword:"(0 decks)", color: "#F0F0F0", selected: false },
+        { name: "Warlock", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Warlock_64.png'>", count: 0, countword:"(0 decks)", color: "#9482C9", selected: false },
+        { name: "Shaman" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Shaman_64.png'>" , count: 0, countword:"(0 decks)", color: "#0070DE", selected: false },
+        { name: "Warrior", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Warrior_64.png'>", count: 0, countword:"(0 decks)", color: "#C79C6E", selected: false },
+        { name: "Druid"  , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Druid_64.png'>"  , count: 0, countword:"(0 decks)", color: "#FF7D0A", selected: false },
+        { name: "Rogue"  , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Rogue_64.png'>"  , count: 0, countword:"(0 decks)", color: "#FFF569", selected: false },
+        { name: "Hunter" , icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Hunter_64.png'>" , count: 0, countword:"(0 decks)", color: "#ABD473", selected: false },
+        { name: "Paladin", icon: "<img src='" + $scope.BaseURL + "/assets/Icon_Paladin_64.png'>", count: 0, countword:"(0 decks)", color: "#F58CBA", selected: false }
       ];
     $scope.Archetypes = [];
     $scope.Events = [];
@@ -189,78 +189,88 @@ angular.module('AngularApp', [
             'chartArea':{left:0,top:15,width:'90%',height:'75%'}
           };
       };
-    $scope.PopulateCards = function(wipeAll)
-      {
-          var _deckDB;
-          var card;
-          if(wipeAll)
-          {
-            $scope.Cards = [];
-            _deckDB = $scope.DECKDB;
-          }
-          else
-          {
-            for(var i=0;i<$scope.Cards.length;i++)
-            {
-              card = $scope.Cards[i];
-              card.count = 0;
-              card.countword = "(" + card.count + " decks)";
-            }
-            _deckDB = $scope.FILTERDECKDB;
-          }
-          for(var j=0;j<_deckDB.length;j++)
-          {
-            var deck = _deckDB[j];
-            for(var k=0;k<deck.CARDLIST.length;k++)
-            {
-              var cardflat = deck.CARDLIST[k];
-              card = $scope.LookupCard(cardflat[1]);
-              if(card === null || card == 'undefined')
-              {
-                card = {};
-                card.name = cardflat[1];
-                card.count = cardflat[0];
-                card.countword = "(" + card.count + " decks)";
-                card.include = false;
-                card.exclude = false;
-                $scope.Cards.push(card);
-              }
-              else
-              {
-                card.count++;
-                card.countword = "(" + card.count + " decks)";
-              }
-            }
-          }
-          $scope.Cards.sort(function(a,b)
-          {
-            return a.count < b.count ? 1
-              : a.count > b.count ? -1
-              : 0;
-          });
-      };
-    $scope.PopulateDeckArchetypes = function(wipeAll)
+    $scope.PopulateAllData = function(wipeAll)
       {
         var _deckDB;
+        var card;
         var archetype;
+        var evt;
+        var player;
+        var clss;
         if(wipeAll)
         {
+          $scope.Cards = [];
           $scope.Archetypes = [];
+          $scope.Events = [];
+          $scope.Players = [];
           _deckDB = $scope.DECKDB;
         }
         else
         {
-          for(var i=0;i<$scope.Archetypes.length;i++)
+          for(var i=0;i<$scope.Cards.length;i++)
           {
-            archetype = $scope.Archetypes[i];
+            card = $scope.Cards[i];
+            card.count = 0;
+            card.countword = "(" + card.count + " decks)";
+          }
+          for(var ii=0;ii<$scope.Archetypes.length;ii++)
+          {
+            archetype = $scope.Archetypes[ii];
             archetype.count = 0;
             archetype.countword = "(" + archetype.count + " decks)";
+          }
+          for(var iii=0;iii<$scope.Events.length;iii++)
+          {
+            evt = $scope.Events[iii];
+            evt.count = 0;
+            evt.countword = "(" + evt.count + " decks)";
+          }
+          for(var iiii=0;iiii<$scope.Players.length;iiii++)
+          {
+            player = $scope.Players[iiii];
+            player.count = 0;
+            player.countword = "(" + player.count + " decks)";
+          }
+          for(var iiiii=0;iiiii<$scope.Classes.length;iiiii++)
+          {
+            clss = $scope.Classes[iiiii];
+            clss.count = 0;
+            clss.countword = "(" + clss.count + " decks)";
           }
           _deckDB = $scope.FILTERDECKDB;
         }
         for(var j=0;j<_deckDB.length;j++)
         {
           var deck = _deckDB[j];
+          //populate cards
+          for(var k=0;k<deck.CARDLIST.length;k++)
+          {
+            var cardflat = deck.CARDLIST[k];
+            card = $scope.LookupCard(cardflat[1]);
+            if(card === null || card == 'undefined')
+            {
+              card = {};
+              card.name = cardflat[1];
+              card.count = cardflat[0];
+              card.countword = "(" + card.count + " decks)";
+              card.include = false;
+              card.exclude = false;
+              $scope.Cards.push(card);
+            }
+            else
+            {
+              card.count++;
+              card.countword = "(" + card.count + " decks)";
+            }
+          }
+          // populate classes
+          clss = $scope.LookupClass(deck.CLASS);
+          if(clss !== null && clss != 'undefined')
+          {
+            clss.count++;
+            clss.countword = "(" + clss.count + " decks)";
+          }
+          // populate archetypes
           archetype = $scope.LookupArchetype(deck.ARCHETYPE);
           if(archetype === null || archetype == 'undefined')
           {
@@ -277,36 +287,7 @@ angular.module('AngularApp', [
             archetype.count++;
             archetype.countword = "(" + archetype.count + " decks)";
           }
-        }
-        $scope.Archetypes.sort(function(a,b)
-        {
-          return a.count < b.count ? 1
-            : a.count > b.count ? -1
-            : 0;
-        });
-      };
-    $scope.PopulateEvents = function(wipeAll)
-      {
-        var _deckDB;
-        var evt;
-        if(wipeAll)
-        {
-          $scope.Events = [];
-          _deckDB = $scope.DECKDB;
-        }
-        else
-        {
-          for(var i=0;i<$scope.Events.length;i++)
-          {
-            evt = $scope.Events[i];
-            evt.count = 0;
-            evt.countword = "(" + evt.count + " decks)";
-          }
-          _deckDB = $scope.FILTERDECKDB;
-        }
-        for(var j=0;j<_deckDB.length;j++)
-        {
-          var deck = _deckDB[j];
+          // populate events
           evt = $scope.LookupEvent(deck.EVENT);
           if(evt === null || evt == 'undefined')
           {
@@ -322,36 +303,7 @@ angular.module('AngularApp', [
             evt.count++;
             evt.countword = "(" + evt.count + " decks)";
           }
-        }
-        $scope.Events.sort(function(a,b)
-        {
-          return a.count < b.count ? 1
-            : a.count > b.count ? -1
-            : 0;
-        });
-      };
-    $scope.PopulatePlayers = function(wipeAll)
-      {
-        var _deckDB;
-        var player;
-        if(wipeAll)
-        {
-          $scope.Players = [];
-          _deckDB = $scope.DECKDB;
-        }
-        else
-        {
-          for(var i=0;i<$scope.Players.length;i++)
-          {
-            player = $scope.Players[i];
-            player.count = 0;
-            player.countword = "(" + player.count + " decks)";
-          }
-          _deckDB = $scope.FILTERDECKDB;
-        }
-        for(var j=0;j<_deckDB.length;j++)
-        {
-          var deck = _deckDB[j];
+          // populate players
           player = $scope.LookupPlayer(deck.PLAYER);
           if(player === null || player == 'undefined')
           {
@@ -368,6 +320,30 @@ angular.module('AngularApp', [
             player.countword = "(" + player.count + " decks)";
           }
         }
+        $scope.Cards.sort(function(a,b)
+        {
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
+            : 0;
+        });
+        $scope.Archetypes.sort(function(a,b)
+        {
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
+            : 0;
+        });
+        $scope.Classes.sort(function(a,b)
+        {
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
+            : 0;
+        });
+        $scope.Events.sort(function(a,b)
+        {
+          return a.count < b.count ? 1
+            : a.count > b.count ? -1
+            : 0;
+        });
         $scope.Players.sort(function(a,b)
         {
           return a.count < b.count ? 1
@@ -377,10 +353,6 @@ angular.module('AngularApp', [
       };
     $scope.UpdateCharts = function()
       {
-        for(var i=0;i<$scope.Classes.length;i++)
-          $scope.Classes[i].count = 0;
-        for(var j=0;j<$scope.FILTERDECKDB.length;j++)
-          $scope.LookupClass($scope.FILTERDECKDB[j].CLASS).count++;
         $scope.ChartByClass.data.rows = [];
         for(var k=0;k<$scope.Classes.length;k++)
           $scope.ChartByClass.data.rows.push({c: [{v: toTitleCase($scope.Classes[k].name)},{v: $scope.Classes[k].count}]});
@@ -661,10 +633,7 @@ angular.module('AngularApp', [
     $scope.Calculate = function()
       {
         $scope.FilterDecks();
-        $scope.PopulateDeckArchetypes(false);
-        $scope.PopulateEvents(false);
-        $scope.PopulatePlayers(false);
-        $scope.PopulateCards(false);
+        $scope.PopulateAllData(false);
         $scope.UpdateCharts();
         $scope.Application.CurrentlySelectedDeckIndex = 0;
         $scope.SelectDeck($scope.Application.CurrentlySelectedDeckIndex);
@@ -679,10 +648,7 @@ angular.module('AngularApp', [
       }
       return "Card Image Not Found!";
     };
-    $scope.PopulateDeckArchetypes(true);
-    $scope.PopulateEvents(true);
-    $scope.PopulatePlayers(true);
-    $scope.PopulateCards(true);
+    $scope.PopulateAllData(true);
     $scope.SetupCharts();
     $scope.Calculate();
 }]);

@@ -4,7 +4,7 @@ footer.text-center.text-danger
           b &copy; 2016 mudzereli - {{ Application.Name }}
           <!--[if gt IE 8]><!-->
           span.dropup.pull-right(dropdown='', on-toggle='toggled(open)', ng-controller='ThemeController')
-            button.btn.btn-sm.btn-danger.dropdown-toggle(dropdown-toggle='') Theme Selector
+            button.btn.btn-sm.btn-danger.dropdown-toggle.hidden-xs(dropdown-toggle='') Theme Selector
             ul.dropdown-menu
               li(ng-repeat='theme in Themes', ng-class='{active: theme == CurrentTheme}')
                 a(href='#/', ng-click='ChangeTheme(theme.ID);') {{theme.Name}}
