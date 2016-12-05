@@ -8,13 +8,12 @@
 - Easy exporting to Hearthstone Deck Tracker.
 
 ###Todo:
--  updates for mobile performance
-    +  populate all dropdowns at once after refreshing (so only iterating through deck lists once)
-    +  fix frame sizes on things like inputs for medium size devices
-- add rarity gem to card lists and color card background according to class
-- add "copy deck to clipboard" button to dashboard deck list
+- more optimizations and ui tweaks
 
 ###Done:
+-  updates for mobile performance
+- add "copy deck to clipboard" button to dashboard deck list
+- cut off deck history older than 2 patches ago (yogg nerf). this should help performance a lot.
 - card info on mouseover
 - speed up site
 - more statistics at top of deck filter panel
