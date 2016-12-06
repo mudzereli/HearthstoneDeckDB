@@ -37,8 +37,8 @@ html.no-js(xmlns:ng='http://angularjs.org', lang='en')
                 div(accordion-heading)
                   .container-fluid
                     | Deck Filters 
+                    small.hidden-xs ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
                     span.glyphicon.pull-right(ng-class="{'glyphicon-chevron-down': Filters.Showing, 'glyphicon-chevron-right': !Filters.Showing}")
-                  //- small.hidden-xs ({{ FILTERDECKDB.length }} decks from {{ FILTERDECKDB[FILTERDECKDB.length-1].DATE | date: 'MM/dd/yyyy' }} to {{ FILTERDECKDB[0].DATE | date: 'MM/dd/yyyy' }})
                   //- .pull-right
                   //-   button.btn.btn-sm.btn-warning.span.glyphicon(ng-class="{ 'glyphicon-resize-small':Filters.Showing, 'glyphicon-resize-full':!Filters.Showing }", tooltip="{{ Filters.Showing ? 'Hide Filters' : 'Show Filters' }}", ng-click="Filters.Showing = !Filters.Showing;")
                   //-   &nbsp;
