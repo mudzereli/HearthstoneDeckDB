@@ -2,7 +2,7 @@
   .col-sm-6
     .panel.panel-primary
       .panel-heading
-        | Main Cards to Consider
+        | Main Cards to Consider 
         small ({{ FILTERDECKDB.length }} decks)
         .pull-right
           button.btn.btn-sm.btn-success(ngclipboard, data-clipboard-text="{{GetTextListFromCardGroup(CopyClipboardCards)}}", tooltip="Copy these cards to the Clipboard")
