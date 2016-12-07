@@ -5,7 +5,7 @@
         | Main Cards to Consider 
         small ({{ FILTERDECKDB.length }} decks)
         .pull-right
-          button.btn.btn-sm.btn-success(ngclipboard, data-clipboard-text="{{GetTextListFromCardGroup(CopyClipboardCards)}}", tooltip="Copy these cards to the Clipboard")
+          button.btn.btn-sm.btn-success.hidden-xs(ngclipboard, data-clipboard-text="{{GetTextListFromCardGroup(CopyClipboardCards)}}", tooltip="Copy these cards to the Clipboard")
             span.glyphicon.glyphicon-copy
         .clearfix
       .panel-body
