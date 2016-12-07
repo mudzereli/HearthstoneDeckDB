@@ -3,8 +3,8 @@
     .panel.panel-primary
       .panel-heading
         | Main Cards to Consider 
-        small ({{ FILTERDECKDB.length }} decks)
         .pull-right
+          small ({{ FILTERDECKDB.length }} decks) 
           button.btn.btn-sm.btn-success.hidden-xs(ngclipboard, data-clipboard-text="{{GetTextListFromCardGroup(CopyClipboardCards)}}", tooltip="Copy these cards to the Clipboard")
             span.glyphicon.glyphicon-copy
         .clearfix
