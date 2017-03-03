@@ -105,7 +105,7 @@ angular.module('AngularApp', [
     $scope.Filters =
       {
         Showing: true,
-        StartDate: new Date(2016,11,01),
+        StartDate: new Date(2016,1,28),
         EndDate: new Date(),
         Classes: [],
         Archetypes: [],
