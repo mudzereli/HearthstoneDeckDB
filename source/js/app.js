@@ -105,7 +105,7 @@ angular.module('AngularApp', [
     $scope.Filters =
       {
         Showing: true,
-        StartDate: new Date(2017,1,28),
+        StartDate: new Date(2017,3,6),
         EndDate: new Date(),
         Classes: [],
         Archetypes: [],
@@ -623,7 +623,7 @@ angular.module('AngularApp', [
           card.include = false;
           card.exclude = false;
         }
-        $scope.Filters.StartDate = new Date(2017,1,28);
+        $scope.Filters.StartDate = new Date(2017,3,6);
         $scope.Filters.EndDate = new Date();
         $scope.Filters.Classes = [];
         $scope.Filters.Archetypes = [];
